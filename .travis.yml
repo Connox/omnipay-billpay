@@ -5,6 +5,7 @@ php:
   - 7.0
 
 before_script:
-  - composer install -n --dev --prefer-source
+  - composer self-update
+  - composer install -n --prefer-source
 
-script: vendor/bin/phpcs --standard=PSR2 src && vendor/bin/phpunit --coverage-text
+script: vendor/bin/phpunit --coverage-text
