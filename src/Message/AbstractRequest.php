@@ -60,7 +60,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             throw new InvalidRequestException('Data must be XML.');
         }
 
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data->asXML())->send();
+        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, (string)$data->asXML())->send();
 
         return $this->createResponse($httpResponse->xml());
     }
