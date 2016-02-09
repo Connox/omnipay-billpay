@@ -107,7 +107,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     protected function getBaseData()
     {
-        $data = new SimpleXMLElement('<data/>');
+        $data = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><data/>');
         $data['api_version'] = self::API_VERSION;
         $data[0]->default_parms['mid'] = $this->getMerchantId();
         $data[0]->default_parms['pid'] = $this->getPortalId();
