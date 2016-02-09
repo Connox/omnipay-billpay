@@ -9,6 +9,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/quillo/omnipay-billpay.svg?style=flat-square)](https://packagist.org/packages/quillo/omnipay-billpay)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/Quillo/omnipay-billpay.svg?style=flat-square)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/)
 [![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/Quillo/omnipay-billpay.svg?style=flat-square)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/)
+[![Scrutinizer Build](https://img.shields.io/scrutinizer/build/g/Quillo/omnipay-billpay.svg?style=flat-square)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/)
 [![Travis](https://img.shields.io/travis/Quillo/omnipay-billpay.svg?style=flat-square)](https://travis-ci.org/Quillo/omnipay-billpay)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
