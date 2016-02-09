@@ -59,11 +59,11 @@ class AuthorizeRequest extends AbstractRequest
     public function getData()
     {
         if ($this->getCard() === null) {
-            throw new InvalidRequestException('This request requires a credit card object and a customer object for address details.');
+            throw new InvalidRequestException('Credit card and customer object required for address details.');
         }
 
         if ($this->getCustomerDetails() === null) {
-            throw new InvalidRequestException('This request requires a customer object for additional details not covered by card.');
+            throw new InvalidRequestException('Customer object required for additional details not covered by card.');
         }
 
         if ($this->getItems() === null || $this->getItems()->count() === 0) {
@@ -269,5 +269,3 @@ class AuthorizeRequest extends AbstractRequest
         return $this->response = new AuthorizeResponse($this, $response);
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

@@ -4,7 +4,6 @@ namespace Omnipay\BillPay\Message;
 
 /**
  * Class CaptureResponse
- *
  * Example xml:
  * <code>
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -25,20 +24,11 @@ namespace Omnipay\BillPay\Message;
 class CaptureResponse extends Response
 {
     /**
-     * @return bool
-     */
-    public function hasInvoiceBankAccount()
-    {
-        return isset($this->data->invoice_bank_account);
-    }
-
-    /**
      * @return array|null
      */
     public function getInvoiceBankAccount()
     {
-        if (!$this->hasInvoiceBankAccount())
-        {
+        if (!$this->hasInvoiceBankAccount()) {
             return null;
         }
 
@@ -50,6 +40,12 @@ class CaptureResponse extends Response
             'invoice_reference' => (string)$this->data->invoice_bank_account['invoice_reference']
         ];
     }
-}
 
-# vim :set ts=4 sw=4 sts=4 et :
+    /**
+     * @return bool
+     */
+    public function hasInvoiceBankAccount()
+    {
+        return isset($this->data->invoice_bank_account);
+    }
+}

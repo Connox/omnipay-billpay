@@ -30,5 +30,3 @@ class RefundResponse extends Response
         return parent::isSuccessful() && count($this->data->children()) === 0;
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

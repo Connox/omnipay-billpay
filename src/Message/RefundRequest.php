@@ -46,5 +46,3 @@ class RefundRequest extends AbstractRequest
         return $this->response = new RefundResponse($this, $response);
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

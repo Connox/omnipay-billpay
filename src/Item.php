@@ -56,5 +56,3 @@ class Item extends \Omnipay\Common\Item implements ItemInterface
         return $this->setParameter('priceNet', $value);
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

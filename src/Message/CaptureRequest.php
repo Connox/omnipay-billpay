@@ -37,5 +37,3 @@ class CaptureRequest extends AbstractRequest
         return $this->response = new CaptureResponse($this, $response);
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

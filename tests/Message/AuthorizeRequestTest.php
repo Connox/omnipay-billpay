@@ -54,16 +54,20 @@ class AuthorizeRequestTest extends TestCase
 
     public function testCardNotExist()
     {
-        self::setExpectedException(InvalidRequestException::class,
-            'This request requires a credit card object and a customer object for address details.');
+        self::setExpectedException(
+            InvalidRequestException::class,
+            'Credit card and customer object required for address details.'
+        );
         $this->request->setCard(null);
         $this->request->getData();
     }
 
     public function testCustomerNotExist()
     {
-        self::setExpectedException(InvalidRequestException::class,
-            'This request requires a customer object for additional details not covered by card.');
+        self::setExpectedException(
+            InvalidRequestException::class,
+            'Customer object required for additional details not covered by card.'
+        );
         $this->request->setCustomerDetails(null);
         $this->request->getData();
     }
@@ -75,14 +79,18 @@ class AuthorizeRequestTest extends TestCase
             'billingFirstName' => 'TEST1'
         ]);
 
-        self::assertXmlStringEqualsXmlFile(__DIR__ . '/Xml/AuthorizeRequest.DifferingAddresses.xml',
-            $this->request->setCard($card)->getData()->asXML());
+        self::assertXmlStringEqualsXmlFile(
+            __DIR__ . '/Xml/AuthorizeRequest.DifferingAddresses.xml',
+            $this->request->setCard($card)->getData()->asXML()
+        );
     }
 
     public function testGetData()
     {
-        self::assertXmlStringEqualsXmlFile(__DIR__ . '/Xml/AuthorizeRequest.GetData.xml',
-            $this->request->getData()->asXML());
+        self::assertXmlStringEqualsXmlFile(
+            __DIR__ . '/Xml/AuthorizeRequest.GetData.xml',
+            $this->request->getData()->asXML()
+        );
     }
 
     public function testItemsIncorrectType()
@@ -110,8 +118,10 @@ class AuthorizeRequestTest extends TestCase
 
     public function testPaymentMethodInvalid()
     {
-        self::setExpectedException(InvalidRequestException::class,
-            'Unknown payment method specified \'bananas\' specified.');
+        self::setExpectedException(
+            InvalidRequestException::class,
+            'Unknown payment method specified \'bananas\' specified.'
+        );
         $this->request->setPaymentMethod('bananas');
         $this->request->getData();
     }
@@ -123,5 +133,3 @@ class AuthorizeRequestTest extends TestCase
         $this->request->getData();
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :
