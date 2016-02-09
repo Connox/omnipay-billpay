@@ -52,20 +52,6 @@ class AuthorizeRequestTest extends TestCase
         ]));
     }
 
-    public function testPaymentMethodNotSet()
-    {
-        self::setExpectedException(InvalidRequestException::class, 'This request requires a payment method.');
-        $this->request->setPaymentMethod(null);
-        $this->request->getData();
-    }
-
-    public function testPaymentMethodInvalid()
-    {
-        self::setExpectedException(InvalidRequestException::class, 'Unknown payment method specified \'bananas\' specified.');
-        $this->request->setPaymentMethod('bananas');
-        $this->request->getData();
-    }
-
     public function testCardNotExist()
     {
         self::setExpectedException(InvalidRequestException::class,
@@ -82,11 +68,21 @@ class AuthorizeRequestTest extends TestCase
         $this->request->getData();
     }
 
-    public function testItemsNotExist()
+    public function testDifferingAddresses()
     {
-        self::setExpectedException(InvalidRequestException::class, 'This request requires items.');
-        $this->request->setItems(null);
-        $this->request->getData();
+        $card = new CreditCard([
+            'firstName' => 'TEST2',
+            'billingFirstName' => 'TEST1'
+        ]);
+
+        self::assertXmlStringEqualsXmlFile(__DIR__ . '/Xml/AuthorizeRequest.DifferingAddresses.xml',
+            $this->request->setCard($card)->getData()->asXML());
+    }
+
+    public function testGetData()
+    {
+        self::assertXmlStringEqualsXmlFile(__DIR__ . '/Xml/AuthorizeRequest.GetData.xml',
+            $this->request->getData()->asXML());
     }
 
     public function testItemsIncorrectType()
@@ -105,9 +101,26 @@ class AuthorizeRequestTest extends TestCase
         $this->request->getData();
     }
 
-    public function testGetData()
+    public function testItemsNotExist()
     {
-        self::assertXmlStringEqualsXmlFile(__DIR__ . '/Xml/AuthorizeRequest.xml', $this->request->getData()->asXML());
+        self::setExpectedException(InvalidRequestException::class, 'This request requires items.');
+        $this->request->setItems(null);
+        $this->request->getData();
+    }
+
+    public function testPaymentMethodInvalid()
+    {
+        self::setExpectedException(InvalidRequestException::class,
+            'Unknown payment method specified \'bananas\' specified.');
+        $this->request->setPaymentMethod('bananas');
+        $this->request->getData();
+    }
+
+    public function testPaymentMethodNotSet()
+    {
+        self::setExpectedException(InvalidRequestException::class, 'This request requires a payment method.');
+        $this->request->setPaymentMethod(null);
+        $this->request->getData();
     }
 }
 

@@ -13,7 +13,7 @@
 [![Travis](https://img.shields.io/travis/Quillo/omnipay-billpay.svg?style=flat-square)](https://travis-ci.org/Quillo/omnipay-billpay)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
-processing library for PHP 5.6+. This package implements PayPal support for Omnipay.
+processing library for PHP 5.6+. This package implements BillPay support for Omnipay.
 
 
 This package is still in the early development stages and is not functioning at the moment 

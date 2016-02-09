@@ -65,20 +65,20 @@ class GatewayTest extends GatewayTestCase
         ]);
 
         $this->card = new CreditCard([
-                'title' => '',
-                'firstName' => 'Herbert 8549403905',
-                'lastName' => 'BillPay 8549403905',
-                'address1' => 'Teststrasse 8549403905 123',
-                'address2' => '',
-                'city' => 'Teststadt 8549403905',
-                'postcode' => '12345',
-                'country' => 'DEU',
-                'phone' => '0302333459',
-                'fax' => '',
-                'email' => 'testing@billpay.de',
-                'birthday' => '1985-09-11',
-                'gender' => '',
-            ]);
+            'title' => '',
+            'firstName' => 'Herbert 8549403905',
+            'lastName' => 'BillPay 8549403905',
+            'address1' => 'Teststrasse 8549403905 123',
+            'address2' => '',
+            'city' => 'Teststadt 8549403905',
+            'postcode' => '12345',
+            'country' => 'DEU',
+            'phone' => '0302333459',
+            'fax' => '',
+            'email' => 'testing@billpay.de',
+            'birthday' => '1985-09-11',
+            'gender' => '',
+        ]);
 
         $this->customer = new Customer([
             'id' => '123456',
@@ -136,6 +136,17 @@ class GatewayTest extends GatewayTestCase
         self::assertNull($response->getCode());
     }
 
+    public function testCaptureFailure()
+    {
+        $this->setMockHttpResponse('Failed.txt');
+
+        /** @var CaptureResponse $response */
+        $response = $this->gateway->capture($this->options)->send();
+
+        self::assertFalse($response->isSuccessful());
+        self::assertNull($response->getInvoiceBankAccount());
+    }
+
     public function testCaptureSuccess()
     {
         $this->setMockHttpResponse('Capture.txt');
@@ -152,17 +163,6 @@ class GatewayTest extends GatewayTestCase
             'bank_name' => 'Sparkasse Berlin',
             'invoice_reference' => 'BP555666777/9999',
         ], $response->getInvoiceBankAccount());
-    }
-
-    public function testCaptureFailure()
-    {
-        $this->setMockHttpResponse('Failed.txt');
-
-        /** @var CaptureResponse $response */
-        $response = $this->gateway->capture($this->options)->send();
-
-        self::assertFalse($response->isSuccessful());
-        self::assertNull($response->getInvoiceBankAccount());
     }
 
     public function testRefundSuccess()
