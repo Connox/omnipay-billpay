@@ -94,7 +94,7 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = [])
     {
-        return $this->authorize($parameters)->setCaptureRequestNecessary(0);
+        return $this->authorize($parameters)->setCaptureRequestNecessary(false);
     }
 
     /**

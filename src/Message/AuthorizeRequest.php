@@ -101,7 +101,7 @@ class AuthorizeRequest extends AbstractRequest
     }
 
     /**
-     * @param bool $value
+     * @param int|bool $value
      *
      * @return AuthorizeRequest
      */

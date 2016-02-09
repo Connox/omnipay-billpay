@@ -83,12 +83,10 @@ class Customer
 
     /**
      * Initialize this item with the specified parameters
-
      *
-*@param array|null $parameters An array of parameters to set on this object
-
+     * @param array|null $parameters An array of parameters to set on this object
      *
-*@return Customer
+     * @return Customer
      */
     public function initialize($parameters = null)
     {
@@ -96,16 +94,17 @@ class Customer
         $this->setType(self::TYPE_NEW);
         $this->setGroup(self::GROUP_PRIVATE);
 
-        Helper::initialize($this, $parameters);
+        if ($parameters !== null) {
+            Helper::initialize($this, $parameters);
+        }
 
         return $this;
     }
 
     /**
      * @param string $group
-
      *
-*@return Customer
+     * @return Customer
      */
     public function setGroup($group)
     {
@@ -116,9 +115,8 @@ class Customer
 
     /**
      * @param string $id
-
      *
-*@return Customer
+     * @return Customer
      */
     public function setId($id)
     {
@@ -129,9 +127,8 @@ class Customer
 
     /**
      * @param string $language Language as ISO 639-1 code
-
      *
-*@return Customer
+     * @return Customer
      */
     public function setLanguage($language)
     {
@@ -142,9 +139,8 @@ class Customer
 
     /**
      * @param string $type
-
      *
-*@return Customer
+     * @return Customer
      */
     public function setType($type)
     {
@@ -166,9 +162,8 @@ class Customer
     /**
      * @param string $key
      * @param mixed  $value
-
      *
-*@return Customer
+     * @return Customer
      */
     protected function setParameter($key, $value)
     {

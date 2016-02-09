@@ -2,6 +2,7 @@
 
 namespace Omnipay\BillPay\Message;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Message\ResponseInterface;
 use SimpleXMLElement;
 
@@ -51,9 +52,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      * @param  SimpleXMLElement $data The data to send
      *
      * @return ResponseInterface
+     * @throws InvalidRequestException
      */
     public function sendData($data)
     {
+        if (!$data instanceof SimpleXMLElement) {
+            throw new InvalidRequestException('Data must be XML.');
+        }
+
         $httpResponse = $this->httpClient->post($this->getEndpoint(), null, $data->asXML())->send();
 
         return $this->createResponse($httpResponse->xml());
@@ -101,7 +107,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     protected function getBaseData()
     {
-        $data = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data/>');
+        $data = new SimpleXMLElement('<data/>');
         $data['api_version'] = self::API_VERSION;
         $data[0]->default_parms['mid'] = $this->getMerchantId();
         $data[0]->default_parms['pid'] = $this->getPortalId();
