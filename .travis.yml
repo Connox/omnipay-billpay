@@ -5,8 +5,19 @@ php:
   - 7.0
   - hhvm
 
-before_script:
-  - composer self-update
-  - composer install -n --prefer-source
+# This triggers builds to run on the new TravisCI infrastructure.
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
 
-script: vendor/bin/phpunit --coverage-text
+matrix:
+  include:
+    - php: 5.5
+      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
+
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
+
+script:
+  - vendor/bin/phpcs --standard=psr2 src/
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
