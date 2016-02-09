@@ -159,19 +159,21 @@ class AuthorizeRequest extends AbstractRequest
      */
     protected function appendArticleData(SimpleXMLElement $element)
     {
-        $element[0]->article_data = null;
+        $element->addChild('article_data');
 
         foreach ($this->getItems()->all() as $pos => $item) {
             if (!$item instanceof Item) {
                 throw new InvalidRequestException('Items must be of instance \\Omnipay\\BillPay\\Item');
             }
 
-            $element[0]->article_data[0]->article[$pos]['articleid'] = $item->getId();
-            $element[0]->article_data[0]->article[$pos]['articlequantity'] = $item->getQuantity();
-            $element[0]->article_data[0]->article[$pos]['articlename'] = $item->getName();
-            $element[0]->article_data[0]->article[$pos]['articledescription'] = $item->getDescription();
-            $element[0]->article_data[0]->article[$pos]['articleprice'] = bcmul($item->getPriceNet(), 100, 0);
-            $element[0]->article_data[0]->article[$pos]['articlepricegross'] = bcmul($item->getPrice(), 100, 0);
+            /** @noinspection DisconnectedForeachInstructionInspection */
+            $element->article_data[0]->addChild('article');
+            $element->article_data[0]->article[$pos]['articleid'] = $item->getId();
+            $element->article_data[0]->article[$pos]['articlequantity'] = $item->getQuantity();
+            $element->article_data[0]->article[$pos]['articlename'] = $item->getName();
+            $element->article_data[0]->article[$pos]['articledescription'] = $item->getDescription();
+            $element->article_data[0]->article[$pos]['articleprice'] = bcmul($item->getPriceNet(), 100, 0);
+            $element->article_data[0]->article[$pos]['articlepricegross'] = bcmul($item->getPrice(), 100, 0);
         }
     }
 
@@ -185,25 +187,26 @@ class AuthorizeRequest extends AbstractRequest
         $card = $this->getCard();
         $customer = $this->getCustomerDetails();
 
-        $element[0]->customer_details[0]['customerid'] = $customer->getId();
-        $element[0]->customer_details[0]['customertype'] = $customer->getType();
-        $element[0]->customer_details[0]['salutation'] = null;
-        $element[0]->customer_details[0]['title'] = $card->getBillingTitle();
-        $element[0]->customer_details[0]['firstName'] = $card->getBillingFirstName();
-        $element[0]->customer_details[0]['lastName'] = $card->getBillingLastName();
-        $element[0]->customer_details[0]['street'] = $card->getBillingAddress1();
-        $element[0]->customer_details[0]['streetNo'] = null;
-        $element[0]->customer_details[0]['addressAddition'] = $card->getBillingAddress2();
-        $element[0]->customer_details[0]['zip'] = $card->getBillingPostcode();
-        $element[0]->customer_details[0]['city'] = $card->getBillingCity();
-        $element[0]->customer_details[0]['country'] = $this->getCountryCode($card->getBillingCountry());
-        $element[0]->customer_details[0]['email'] = $card->getEmail();
-        $element[0]->customer_details[0]['phone'] = $card->getBillingPhone();
-        $element[0]->customer_details[0]['cellPhone'] = null;
-        $element[0]->customer_details[0]['birthday'] = $card->getBirthday('Ymd');
-        $element[0]->customer_details[0]['language'] = $customer->getLanguage();
-        $element[0]->customer_details[0]['ip'] = $this->getClientIp();
-        $element[0]->customer_details[0]['customerGroup'] = $customer->getGroup();
+        $element->addChild('customer_details');
+        $element->customer_details[0]['customerid'] = $customer->getId();
+        $element->customer_details[0]['customertype'] = $customer->getType();
+        $element->customer_details[0]['salutation'] = null;
+        $element->customer_details[0]['title'] = $card->getBillingTitle();
+        $element->customer_details[0]['firstName'] = $card->getBillingFirstName();
+        $element->customer_details[0]['lastName'] = $card->getBillingLastName();
+        $element->customer_details[0]['street'] = $card->getBillingAddress1();
+        $element->customer_details[0]['streetNo'] = null;
+        $element->customer_details[0]['addressAddition'] = $card->getBillingAddress2();
+        $element->customer_details[0]['zip'] = $card->getBillingPostcode();
+        $element->customer_details[0]['city'] = $card->getBillingCity();
+        $element->customer_details[0]['country'] = $this->getCountryCode($card->getBillingCountry());
+        $element->customer_details[0]['email'] = $card->getEmail();
+        $element->customer_details[0]['phone'] = $card->getBillingPhone();
+        $element->customer_details[0]['cellPhone'] = null;
+        $element->customer_details[0]['birthday'] = $card->getBirthday('Ymd');
+        $element->customer_details[0]['language'] = $customer->getLanguage();
+        $element->customer_details[0]['ip'] = $this->getClientIp();
+        $element->customer_details[0]['customerGroup'] = $customer->getGroup();
     }
 
     /**
@@ -223,34 +226,36 @@ class AuthorizeRequest extends AbstractRequest
             }
         }
 
+        $element->addChild('shipping_details');
+
         if ($same) {
-            $element[0]->shipping_details[0]['useBillingAddress'] = 1;
-            $element[0]->shipping_details[0]['salutation'] = null;
-            $element[0]->shipping_details[0]['title'] = null;
-            $element[0]->shipping_details[0]['firstName'] = null;
-            $element[0]->shipping_details[0]['lastName'] = null;
-            $element[0]->shipping_details[0]['street'] = null;
-            $element[0]->shipping_details[0]['streetNo'] =  null;
-            $element[0]->shipping_details[0]['addressAddition'] = null;
-            $element[0]->shipping_details[0]['zip'] = null;
-            $element[0]->shipping_details[0]['city'] = null;
-            $element[0]->shipping_details[0]['country'] = null;
-            $element[0]->shipping_details[0]['phone'] = null;
-            $element[0]->shipping_details[0]['cellPhone'] = null;
+            $element->shipping_details[0]['useBillingAddress'] = 1;
+            $element->shipping_details[0]['salutation'] = null;
+            $element->shipping_details[0]['title'] = null;
+            $element->shipping_details[0]['firstName'] = null;
+            $element->shipping_details[0]['lastName'] = null;
+            $element->shipping_details[0]['street'] = null;
+            $element->shipping_details[0]['streetNo'] = null;
+            $element->shipping_details[0]['addressAddition'] = null;
+            $element->shipping_details[0]['zip'] = null;
+            $element->shipping_details[0]['city'] = null;
+            $element->shipping_details[0]['country'] = null;
+            $element->shipping_details[0]['phone'] = null;
+            $element->shipping_details[0]['cellPhone'] = null;
         } else {
-            $element[0]->shipping_details[0]['useBillingAddress'] = 0;
-            $element[0]->shipping_details[0]['salutation'] = null;
-            $element[0]->shipping_details[0]['title'] = $card->getShippingTitle();
-            $element[0]->shipping_details[0]['firstName'] = $card->getShippingFirstName();
-            $element[0]->shipping_details[0]['lastName'] = $card->getShippingLastName();
-            $element[0]->shipping_details[0]['street'] = $card->getShippingAddress1();
-            $element[0]->shipping_details[0]['streetNo'] = null;
-            $element[0]->shipping_details[0]['addressAddition'] = $card->getShippingAddress2();
-            $element[0]->shipping_details[0]['zip'] = $card->getShippingPostcode();
-            $element[0]->shipping_details[0]['city'] = $card->getShippingCity();
-            $element[0]->shipping_details[0]['country'] = $this->getCountryCode($card->getShippingCountry());
-            $element[0]->shipping_details[0]['phone'] = $card->getShippingPhone();
-            $element[0]->shipping_details[0]['cellPhone'] = null;
+            $element->shipping_details[0]['useBillingAddress'] = 0;
+            $element->shipping_details[0]['salutation'] = null;
+            $element->shipping_details[0]['title'] = $card->getShippingTitle();
+            $element->shipping_details[0]['firstName'] = $card->getShippingFirstName();
+            $element->shipping_details[0]['lastName'] = $card->getShippingLastName();
+            $element->shipping_details[0]['street'] = $card->getShippingAddress1();
+            $element->shipping_details[0]['streetNo'] = null;
+            $element->shipping_details[0]['addressAddition'] = $card->getShippingAddress2();
+            $element->shipping_details[0]['zip'] = $card->getShippingPostcode();
+            $element->shipping_details[0]['city'] = $card->getShippingCity();
+            $element->shipping_details[0]['country'] = $this->getCountryCode($card->getShippingCountry());
+            $element->shipping_details[0]['phone'] = $card->getShippingPhone();
+            $element->shipping_details[0]['cellPhone'] = null;
         }
     }
 
