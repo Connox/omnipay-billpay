@@ -5,18 +5,9 @@ php:
   - 7.0
   - hhvm
 
-# This triggers builds to run on the new TravisCI infrastructure.
-# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
-matrix:
-  include:
-    - php: 5.5
-      env: 'COMPOSER_FLAGS="--prefer-stable --prefer-lowest"'
-
 before_script:
   - travis_retry composer self-update
-  - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
+  - travis_retry composer update --no-interaction --prefer-source
 
 script:
   - vendor/bin/phpcs --standard=psr2 src/

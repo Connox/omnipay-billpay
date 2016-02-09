@@ -20,6 +20,15 @@ namespace Omnipay\BillPay\Message;
  */
 class RefundResponse extends Response
 {
+    /**
+     * Is the response successful?
+     *
+     * @return bool
+     */
+    public function isSuccessful()
+    {
+        return parent::isSuccessful() && count($this->data->children()) === 0;
+    }
 }
 
 # vim :set ts=4 sw=4 sts=4 et :

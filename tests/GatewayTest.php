@@ -3,6 +3,7 @@
 namespace Omnipay\BillPay;
 
 use Omnipay\BillPay\Message\AuthorizeRequest;
+use Omnipay\BillPay\Message\AuthorizeResponse;
 use Omnipay\BillPay\Message\CaptureResponse;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\ItemBag;
@@ -106,6 +107,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('Failed.txt');
 
+        /** @var AuthorizeResponse $response */
         $response = $this->gateway->authorize($this->options)
             ->setCustomerDetails($this->customer)
             ->setItems($this->items)
@@ -117,12 +119,14 @@ class GatewayTest extends GatewayTestCase
         self::assertEquals('1aa2fb2d-2b78-4393-bf06-be0012dda337', $response->getTransactionReference());
         self::assertEquals('CustomerMessage', $response->getMessage());
         self::assertEquals('12345', $response->getCode());
+        self::assertNull($response->getCorrectedAddress());
     }
 
     public function testAuthorizeSuccess()
     {
         $this->setMockHttpResponse('Preauthorize.txt');
 
+        /** @var AuthorizeResponse $response */
         $response = $this->gateway->authorize($this->options)
             ->setCustomerDetails($this->customer)
             ->setItems($this->items)
@@ -134,6 +138,15 @@ class GatewayTest extends GatewayTestCase
         self::assertEquals('1aa2fb2d-2b78-4393-bf06-be0012dda337', $response->getTransactionReference());
         self::assertNull($response->getMessage());
         self::assertNull($response->getCode());
+
+        self::assertTrue($response->hasCorrectedAddress());
+        self::assertEquals([
+            'street' => 'Teststrasse 8549403905',
+            'streetNo' => '123',
+            'zip' => '12345',
+            'city' => 'Teststadt 8549403905',
+            'country' => 'DEU'
+        ], $response->getCorrectedAddress());
     }
 
     public function testCaptureFailure()

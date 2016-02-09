@@ -25,11 +25,19 @@ namespace Omnipay\BillPay\Message;
 class CaptureResponse extends Response
 {
     /**
-     * @return null
+     * @return bool
+     */
+    public function hasInvoiceBankAccount()
+    {
+        return isset($this->data->invoice_bank_account);
+    }
+
+    /**
+     * @return array|null
      */
     public function getInvoiceBankAccount()
     {
-        if (!isset($this->data->invoice_bank_account))
+        if (!$this->hasInvoiceBankAccount())
         {
             return null;
         }
