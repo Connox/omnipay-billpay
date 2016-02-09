@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data api_version="1.5.10" tcaccepted="1" expecteddaystillshipping="2" capturerequestnecessary="0" paymenttype="1">
+    <default_parms mid="" pid="" bpsecure=""/>
+    <customer_details customerid="" customertype="n" salutation="" title="" firstName="" lastName="" street=""
+                      addressAddition="" zip="" city="" country="" email="" phone="" cellPhone="" birthday=""
+                      language="" ip="" customerGroup="p"/>
+    <shipping_details useBillingAddress="1" salutation="" title="" firstName="" lastName="" street="" addressAddition=""
+                      zip="" city="" country="" phone="" cellPhone=""/>
+    <article_data>
+        <article articleid="1" articlequantity="1" articlename="IT-12345" articledescription="Article 12345 - white"
+                 articleprice="420" articlepricegross="500"/>
+        <article articleid="2" articlequantity="1" articlename="IT-67890" articledescription="Item 67890"
+                 articleprice="420" articlepricegross="500"/>
+    </article_data>
+</data>

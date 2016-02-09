@@ -1,0 +1,14 @@
+HTTP/1.1 200 OK
+Date: Fri, 28 Jan 2016 15:24:21 GMT
+Server: Apache
+Content-Length: 243
+Connection: close
+Content-Type: application/xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data bptid="1aa2fb2d-2b78-4393-bf06-be0012dda337"
+      customer_message="CustomerMessage"
+      error_code="12345"
+      merchant_message="MerchantMessage"
+      status="DENIED">
+</data>

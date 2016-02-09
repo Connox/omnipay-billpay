@@ -1,0 +1,31 @@
+{
+  "name": "quillo/omnipay-billpay",
+  "type": "library",
+  "description": "BillPay gateway for Omnipay payment processing library",
+  "keywords": [
+    "gateway",
+    "merchant",
+    "omnipay",
+    "pay",
+    "payment",
+    "billpay",
+    "purchase"
+  ],
+  "homepage": "https://github.com/Quillo/omnipay-billpay",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andreas Lange",
+      "email": "andreas.lange@quillo.de"
+    }
+  ],
+  "autoload": {
+    "psr-4": { "Omnipay\\BillPay\\" : "src/" }
+  },
+  "require": {
+    "omnipay/common": "~2.0"
+  },
+  "require-dev": {
+    "omnipay/tests": "~2.0"
+  }
+}

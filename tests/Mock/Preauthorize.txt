@@ -1,0 +1,26 @@
+HTTP/1.1 200 OK
+Date: Fri, 28 Jan 2016 15:24:21 GMT
+Server: Apache
+Content-Length: 720
+Connection: close
+Content-Type: application/xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data bptid="1aa2fb2d-2b78-4393-bf06-be0012dda337"
+      customer_message=""
+      error_code="0"
+      merchant_message=""
+      status="APPROVED">
+
+    <corrected_address city="Teststadt 8549403905"
+                       country="DEU"
+                       street="Teststrasse 8549403905"
+                       streetNo="123"
+                       zip="12345"/>
+
+    <invoice_bank_account account_holder="BillPay GmbH"
+                          account_number="DE07312312312312312"
+                          bank_code="BELADEBEXXX"
+                          bank_name="Sparkasse Berlin"
+                          invoice_reference="BP555666777/9999"/>
+</data>

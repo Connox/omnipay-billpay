@@ -1,0 +1,6 @@
+HTTP/1.1 200 OK
+Date: Fri, 28 Jan 2016 15:24:21 GMT
+Server: Apache
+Content-Length: 0
+Connection: close
+Content-Type: application/xml; charset=utf-8
