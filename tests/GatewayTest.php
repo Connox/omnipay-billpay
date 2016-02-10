@@ -44,28 +44,38 @@ class GatewayTest extends GatewayTestCase
             'merchantId' => '4441',
             'portalId' => '6021',
             'securityKey' => '25d55ad283aa400af464c76d713c07ad',
+            'currency' => 'EUR',
+            'amount' => '10.00',
+            'transactionId' => 'ORDER-12345678'
         ];
 
-        $this->items = new ItemBag([
-                new Item([
+        $this->items = new ItemBag(
+            [
+                new Item(
+                    [
                         'id' => '1',
                         'name' => 'IT-12345',
                         'description' => 'Article 12345 - white',
                         'quantity' => 1,
                         'price' => '5.00',
-                        'priceNet' => '4.2017'
-                    ]),
-                new Item([
+                        'priceNet' => '4.201680672268908'
+                    ]
+                ),
+                new Item(
+                    [
                         'id' => '2',
                         'name' => 'IT-67890',
                         'description' => 'Item 67890',
                         'quantity' => 1,
                         'price' => '5.00',
-                        'priceNet' => '4.2017'
-                    ]),
-            ]);
+                        'priceNet' => '4.201680672268908'
+                    ]
+                ),
+            ]
+        );
 
-        $this->card = new CreditCard([
+        $this->card = new CreditCard(
+            [
                 'title' => '',
                 'firstName' => 'Herbert 8549403905',
                 'lastName' => 'BillPay 8549403905',
@@ -79,14 +89,17 @@ class GatewayTest extends GatewayTestCase
                 'email' => 'testing@billpay.de',
                 'birthday' => '1985-09-11',
                 'gender' => '',
-            ]);
+            ]
+        );
 
-        $this->customer = new Customer([
+        $this->customer = new Customer(
+            [
                 'id' => '123456',
                 'type' => Customer::TYPE_EXISTING,
                 'group' => Customer::GROUP_PRIVATE,
                 'language' => Customer::LANGUAGE_GERMAN,
-            ]);
+            ]
+        );
     }
 
     public function testAuthorizeEmptyResponse()
@@ -140,13 +153,16 @@ class GatewayTest extends GatewayTestCase
         self::assertNull($response->getCode());
 
         self::assertTrue($response->hasCorrectedAddress());
-        self::assertEquals([
-            'street' => 'Teststrasse 8549403905',
-            'streetNo' => '123',
-            'zip' => '12345',
-            'city' => 'Teststadt 8549403905',
-            'country' => 'DEU'
-        ], $response->getCorrectedAddress());
+        self::assertEquals(
+            [
+                'street' => 'Teststrasse 8549403905',
+                'streetNo' => '123',
+                'zip' => '12345',
+                'city' => 'Teststadt 8549403905',
+                'country' => 'DEU'
+            ],
+            $response->getCorrectedAddress()
+        );
     }
 
     public function testCaptureFailure()
@@ -169,13 +185,16 @@ class GatewayTest extends GatewayTestCase
 
         self::assertTrue($response->isSuccessful());
         self::assertNull($response->getMessage());
-        self::assertEquals([
-            'account_holder' => 'BillPay GmbH',
-            'account_number' => 'DE07312312312312312',
-            'bank_code' => 'BELADEBEXXX',
-            'bank_name' => 'Sparkasse Berlin',
-            'invoice_reference' => 'BP555666777/9999',
-        ], $response->getInvoiceBankAccount());
+        self::assertEquals(
+            [
+                'account_holder' => 'BillPay GmbH',
+                'account_number' => 'DE07312312312312312',
+                'bank_code' => 'BELADEBEXXX',
+                'bank_name' => 'Sparkasse Berlin',
+                'invoice_reference' => 'BP555666777/9999',
+            ],
+            $response->getInvoiceBankAccount()
+        );
     }
 
     public function testRefundSuccess()

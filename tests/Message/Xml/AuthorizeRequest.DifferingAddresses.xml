@@ -9,7 +9,9 @@
     <article_data>
         <article articleid="1" articlequantity="1" articlename="IT-12345" articledescription="Article 12345 - white"
                  articleprice="420" articlepricegross="500"/>
-        <article articleid="2" articlequantity="1" articlename="IT-67890" articledescription="Item 67890"
+        <article articleid="2" articlequantity="3" articlename="IT-67890" articledescription="Item 67890"
                  articleprice="420" articlepricegross="500"/>
     </article_data>
+    <total shippingname="Express" shippingprice="416" shippingpricegross="495" rebate="84" rebategross="100"
+           carttotalprice="2013" carttotalpricegross="2395" currency="EUR" reference="ORDER-12345678"/>
 </data>

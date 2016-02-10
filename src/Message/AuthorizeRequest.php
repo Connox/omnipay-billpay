@@ -46,7 +46,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getCustomerDetails()
     {
-        return $this->getParameter('customer');
+        return $this->getParameter('customerDetails');
     }
 
     /**
@@ -86,6 +86,7 @@ class AuthorizeRequest extends AbstractRequest
         $this->appendCustomerDetails($data);
         $this->appendShippingDetails($data);
         $this->appendArticleData($data);
+        $this->appendTotal($data);
 
         return $data;
     }
@@ -98,6 +99,56 @@ class AuthorizeRequest extends AbstractRequest
     public function getExpectedDaysTillShipping()
     {
         return (int)$this->getParameter('expectedDaysTillShipping');
+    }
+
+    /**
+     * Gets the net rebate amount for the order
+     *
+     * @return string|null
+     */
+    public function getRebate()
+    {
+        return $this->getParameter('rebate');
+    }
+
+    /**
+     * Gets the gross rebate amount for the order
+     *
+     * @return string|null
+     */
+    public function getRebateGross()
+    {
+        return $this->getParameter('rebateGross');
+    }
+
+    /**
+     * Gets the shipping method name
+     *
+     * @return string|null
+     */
+    public function getShippingName()
+    {
+        return $this->getParameter('shippingName');
+    }
+
+    /**
+     * Gets the net amount of shipping cost for the order
+     *
+     * @return string|null
+     */
+    public function getShippingPrice()
+    {
+        return $this->getParameter('shippingPrice');
+    }
+
+    /**
+     * Gets the gross amount of shipping cost for the order
+     *
+     * @return string|null
+     */
+    public function getShippingPriceGross()
+    {
+        return $this->getParameter('shippingPriceGross');
     }
 
     /**
@@ -119,7 +170,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function setCustomerDetails($customer)
     {
-        return $this->setParameter('customer', $customer);
+        return $this->setParameter('customerDetails', $customer);
     }
 
     /**
@@ -150,6 +201,66 @@ class AuthorizeRequest extends AbstractRequest
         }
 
         return parent::setPaymentMethod($value);
+    }
+
+    /**
+     * Sets net rebate amount for the order
+     *
+     * @param float $rebate net rebate amount
+     *
+     * @return AuthorizeRequest
+     */
+    public function setRebate($rebate)
+    {
+        return $this->setParameter('rebate', $rebate);
+    }
+
+    /**
+     * Sets gross rebate amount for the order
+     *
+     * @param string $rebateGross gross rebate amount
+     *
+     * @return AuthorizeRequest
+     */
+    public function setRebateGross($rebateGross)
+    {
+        return $this->setParameter('rebateGross', $rebateGross);
+    }
+
+    /**
+     * Sets shipping method name (e.g. "Express")
+     *
+     * @param string $name
+     *
+     * @return AuthorizeRequest
+     */
+    public function setShippingName($name)
+    {
+        return $this->setParameter('shippingName', $name);
+    }
+
+    /**
+     * Sets net amount of shipping cost for the order
+     *
+     * @param float $price net amount of shipping cost
+     *
+     * @return AuthorizeRequest
+     */
+    public function setShippingPrice($price)
+    {
+        return $this->setParameter('shippingPrice', $price);
+    }
+
+    /**
+     * Sets gross amount of shipping cost for the order
+     *
+     * @param string $priceGross gross amount of shipping cost
+     *
+     * @return AuthorizeRequest
+     */
+    public function setShippingPriceGross($priceGross)
+    {
+        return $this->setParameter('shippingPriceGross', $priceGross);
     }
 
     /**
@@ -257,6 +368,47 @@ class AuthorizeRequest extends AbstractRequest
             $element->shipping_details[0]['phone'] = $card->getShippingPhone();
             $element->shipping_details[0]['cellPhone'] = null;
         }
+    }
+
+    protected function appendTotal(SimpleXMLElement $element)
+    {
+        $totalNet = 0.0;
+        $totalGross = 0.0;
+
+        foreach ($this->getItems()->all() as $pos => $item) {
+            /** @var Item $item */
+            $totalNet = bcadd($totalNet, bcmul($item->getPriceNet(), $item->getQuantity(), 8), 8);
+            $totalGross = bcadd($totalGross, bcmul($item->getPrice(), $item->getQuantity(), 8), 8);
+        }
+
+        // add shipping
+        $totalNet = bcadd($totalNet, $this->getShippingPrice(), 8);
+        $totalGross = bcadd($totalGross, $this->getShippingPriceGross(), 8);
+
+        // remove rebates
+        $totalNet = bcsub($totalNet, $this->getRebate(), 8);
+        $totalGross = bcsub($totalGross, $this->getRebateGross(), 8);
+
+        if (bccomp($totalGross, $this->getAmount(), 8) !== 0) {
+            throw new InvalidRequestException(
+                sprintf(
+                    'Amount (%0.2f) differs from calculated amount (%0.2f) (items + shipping - rebate).',
+                    $totalGross,
+                    $this->getAmount()
+                )
+            );
+        }
+
+        $element->addChild('total');
+        $element->total[0]['shippingname'] = $this->getShippingName();
+        $element->total[0]['shippingprice'] = round(bcmul($this->getShippingPrice(), 100, 8));
+        $element->total[0]['shippingpricegross'] = round(bcmul($this->getShippingPriceGross(), 100, 8));
+        $element->total[0]['rebate'] = round(bcmul($this->getRebate(), 100, 8));
+        $element->total[0]['rebategross'] = round(bcmul($this->getRebateGross(), 100, 8));
+        $element->total[0]['carttotalprice'] = round(bcmul($totalNet, 100, 8));
+        $element->total[0]['carttotalpricegross'] = round(bcmul($totalGross, 100, 8));
+        $element->total[0]['currency'] = $this->getCurrency();
+        $element->total[0]['reference'] = $this->getTransactionId();
     }
 
     /**
