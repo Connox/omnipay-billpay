@@ -4,7 +4,6 @@ namespace Omnipay\BillPay\Message;
 
 /**
  * Class RefundResponse
- *
  * Example xml:
  * <code>
  * <?xml version="1.0" encoding="UTF-8" ?>
@@ -13,7 +12,6 @@ namespace Omnipay\BillPay\Message;
  * </code>
  *
  * @package   Omnipay\BillPay
- *
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT

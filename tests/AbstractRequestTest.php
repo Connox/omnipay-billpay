@@ -2,22 +2,30 @@
 
 namespace Omnipay\BillPay;
 
-use Guzzle\Http\Client;
-use Omnipay\BillPay\Message\DummyRequest;
+use Mockery;
+use Omnipay\BillPay\Message\AbstractRequest;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Symfony\Component\HttpFoundation\Request;
+use Omnipay\Common\Message\MessageInterface;
+use PHPUnit_Framework_TestCase;
 
-require_once __DIR__ . '/Mock/DummyRequest.php';
-
-class AbstractRequestTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class AbstractRequestTest
+ *
+ * @package   Omnipay\BillPay
+ * @author    Andreas Lange <andreas.lange@quillo.de>
+ * @copyright 2016, Quillo GmbH
+ * @license   MIT
+ */
+class AbstractRequestTest extends PHPUnit_Framework_TestCase
 {
     public function testDefectXmlSend()
     {
-        $mock = new DummyRequest(new Client(), new Request());
+        $mock = Mockery::mock(AbstractRequest::class, MessageInterface::class)->makePartial();
+        $mock->shouldReceive('getData')->andReturn(null);
 
         self::setExpectedException(InvalidRequestException::class);
+
+        /** @var AbstractRequest $mock */
         $mock->send();
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

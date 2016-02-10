@@ -2,6 +2,8 @@
 
 namespace Omnipay\BillPay;
 
+use PHPUnit_Framework_TestCase;
+
 /**
  * Class CustomerTest
  *
@@ -10,7 +12,7 @@ namespace Omnipay\BillPay;
  * @copyright 2016, Quillo GmbH
  * @license   MIT
  */
-class CustomerTest extends \PHPUnit_Framework_TestCase
+class CustomerTest extends PHPUnit_Framework_TestCase
 {
     public function testDefaultParameters()
     {
@@ -18,5 +20,3 @@ class CustomerTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(['type' => 'n', 'group' => 'p'], $class->getParameters());
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

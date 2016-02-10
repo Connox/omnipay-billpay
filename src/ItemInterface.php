@@ -10,16 +10,16 @@ namespace Omnipay\BillPay;
 interface ItemInterface extends \Omnipay\Common\ItemInterface
 {
     /**
-     * Price of the item (net amount, excluding taxes)
-     *
-     * @return string
-     */
-    public function getPriceNet();
-
-    /**
      * ID of the item
      *
      * @return string
      */
     public function getId();
+
+    /**
+     * Price of the item (net amount, excluding taxes)
+     *
+     * @return string
+     */
+    public function getPriceNet();
 }

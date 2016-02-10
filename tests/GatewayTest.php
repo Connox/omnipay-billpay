@@ -47,46 +47,46 @@ class GatewayTest extends GatewayTestCase
         ];
 
         $this->items = new ItemBag([
-            new Item([
-                'id' => '1',
-                'name' => 'IT-12345',
-                'description' => 'Article 12345 - white',
-                'quantity' => 1,
-                'price' => '5.00',
-                'priceNet' => '4.2017'
-            ]),
-            new Item([
-                'id' => '2',
-                'name' => 'IT-67890',
-                'description' => 'Item 67890',
-                'quantity' => 1,
-                'price' => '5.00',
-                'priceNet' => '4.2017'
-            ]),
-        ]);
+                new Item([
+                        'id' => '1',
+                        'name' => 'IT-12345',
+                        'description' => 'Article 12345 - white',
+                        'quantity' => 1,
+                        'price' => '5.00',
+                        'priceNet' => '4.2017'
+                    ]),
+                new Item([
+                        'id' => '2',
+                        'name' => 'IT-67890',
+                        'description' => 'Item 67890',
+                        'quantity' => 1,
+                        'price' => '5.00',
+                        'priceNet' => '4.2017'
+                    ]),
+            ]);
 
         $this->card = new CreditCard([
-            'title' => '',
-            'firstName' => 'Herbert 8549403905',
-            'lastName' => 'BillPay 8549403905',
-            'address1' => 'Teststrasse 8549403905 123',
-            'address2' => '',
-            'city' => 'Teststadt 8549403905',
-            'postcode' => '12345',
-            'country' => 'DEU',
-            'phone' => '0302333459',
-            'fax' => '',
-            'email' => 'testing@billpay.de',
-            'birthday' => '1985-09-11',
-            'gender' => '',
-        ]);
+                'title' => '',
+                'firstName' => 'Herbert 8549403905',
+                'lastName' => 'BillPay 8549403905',
+                'address1' => 'Teststrasse 8549403905 123',
+                'address2' => '',
+                'city' => 'Teststadt 8549403905',
+                'postcode' => '12345',
+                'country' => 'DEU',
+                'phone' => '0302333459',
+                'fax' => '',
+                'email' => 'testing@billpay.de',
+                'birthday' => '1985-09-11',
+                'gender' => '',
+            ]);
 
         $this->customer = new Customer([
-            'id' => '123456',
-            'type' => Customer::TYPE_EXISTING,
-            'group' => Customer::GROUP_PRIVATE,
-            'language' => Customer::LANGUAGE_GERMAN,
-        ]);
+                'id' => '123456',
+                'type' => Customer::TYPE_EXISTING,
+                'group' => Customer::GROUP_PRIVATE,
+                'language' => Customer::LANGUAGE_GERMAN,
+            ]);
     }
 
     public function testAuthorizeEmptyResponse()
@@ -188,5 +188,3 @@ class GatewayTest extends GatewayTestCase
         self::assertNull($response->getMessage());
     }
 }
-
-# vim :set ts=4 sw=4 sts=4 et :

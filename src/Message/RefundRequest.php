@@ -7,7 +7,6 @@ use SimpleXMLElement;
 
 /**
  * Message RefundRequest
- *
  * Example xml:
  * <code>
  * <?xml version="1.0" encoding="UTF-8"?>
