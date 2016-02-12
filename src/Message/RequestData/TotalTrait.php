@@ -164,26 +164,7 @@ trait TotalTrait
      */
     protected function appendTotal(SimpleXMLElement $data)
     {
-        if ($this->getItems() === null || $this->getItems()->count() === 0) {
-            throw new InvalidRequestException('This request requires items.');
-        }
-
-        $totalNet = 0.0;
-        $totalGross = 0.0;
-
-        foreach ($this->getItems()->all() as $pos => $item) {
-            /** @var Item $item */
-            $totalNet = bcadd($totalNet, bcmul($item->getPriceNet(), $item->getQuantity(), 8), 8);
-            $totalGross = bcadd($totalGross, bcmul($item->getPrice(), $item->getQuantity(), 8), 8);
-        }
-
-        // add shipping
-        $totalNet = bcadd($totalNet, $this->getShippingPrice(), 8);
-        $totalGross = bcadd($totalGross, $this->getShippingPriceGross(), 8);
-
-        // remove rebates
-        $totalNet = bcsub($totalNet, $this->getRebate(), 8);
-        $totalGross = bcsub($totalGross, $this->getRebateGross(), 8);
+        list($totalNet, $totalGross) = $this->calculateTotalAmounts();
 
         if (bccomp($totalGross, $this->getAmount(), 8) !== 0) {
             throw new InvalidRequestException(
@@ -205,6 +186,36 @@ trait TotalTrait
         $data->total[0]['carttotalpricegross'] = round(bcmul($totalGross, 100, 8));
         $data->total[0]['currency'] = $this->getCurrency();
         $data->total[0]['reference'] = $this->getTransactionId();
+    }
+
+    /**
+     * @return array
+     * @throws InvalidRequestException
+     */
+    protected function calculateTotalAmounts()
+    {
+        if ($this->getItems() === null || $this->getItems()->count() === 0) {
+            throw new InvalidRequestException('This request requires items.');
+        }
+
+        $totalNet = 0.0;
+        $totalGross = 0.0;
+
+        foreach ($this->getItems()->all() as $pos => $item) {
+            /** @var Item $item */
+            $totalNet = bcadd($totalNet, bcmul($item->getPriceNet(), $item->getQuantity(), 8), 8);
+            $totalGross = bcadd($totalGross, bcmul($item->getPrice(), $item->getQuantity(), 8), 8);
+        }
+
+        // add shipping
+        $totalNet = bcadd($totalNet, $this->getShippingPrice(), 8);
+        $totalGross = bcadd($totalGross, $this->getShippingPriceGross(), 8);
+
+        // remove rebates
+        $totalNet = bcsub($totalNet, $this->getRebate(), 8);
+        $totalGross = bcsub($totalGross, $this->getRebateGross(), 8);
+
+        return [$totalNet, $totalGross];
     }
 
     /**
