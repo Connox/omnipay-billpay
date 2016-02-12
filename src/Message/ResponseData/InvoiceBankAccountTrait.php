@@ -43,10 +43,6 @@ trait InvoiceBankAccountTrait
      */
     public function hasInvoiceBankAccount()
     {
-        if (!$this->data instanceof SimpleXMLElement) {
-            return false;
-        }
-
-        return isset($this->data->invoice_bank_account);
+        return $this->data instanceof SimpleXMLElement && isset($this->data->invoice_bank_account);
     }
 }

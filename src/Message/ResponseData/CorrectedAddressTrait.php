@@ -41,10 +41,6 @@ trait CorrectedAddressTrait
      */
     public function hasCorrectedAddress()
     {
-        if (!$this->data instanceof SimpleXMLElement) {
-            return false;
-        }
-
-        return isset($this->data->corrected_address);
+        return $this->data instanceof SimpleXMLElement && isset($this->data->corrected_address);
     }
 }
