@@ -2,8 +2,12 @@
 
 namespace Omnipay\BillPay\Message;
 
+use Omnipay\BillPay\Message\ResponseData\BaseDataTrait;
+use Omnipay\Common\Message\AbstractResponse;
+
 /**
  * Class RefundResponse
+ *
  * Example xml:
  * <code>
  * <?xml version="1.0" encoding="UTF-8" ?>
@@ -16,15 +20,7 @@ namespace Omnipay\BillPay\Message;
  * @copyright 2016, Quillo GmbH
  * @license   MIT
  */
-class RefundResponse extends Response
+class RefundResponse extends AbstractResponse
 {
-    /**
-     * Is the response successful?
-     *
-     * @return bool
-     */
-    public function isSuccessful()
-    {
-        return parent::isSuccessful() && count($this->data->children()) === 0;
-    }
+    use BaseDataTrait;
 }

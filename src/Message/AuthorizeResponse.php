@@ -2,8 +2,14 @@
 
 namespace Omnipay\BillPay\Message;
 
+use Omnipay\BillPay\Message\ResponseData\BaseDataTrait;
+use Omnipay\BillPay\Message\ResponseData\CorrectedAddressTrait;
+use Omnipay\BillPay\Message\ResponseData\InvoiceBankAccountTrait;
+use Omnipay\Common\Message\AbstractResponse;
+
 /**
  * Class AuthorizeResponse
+ *
  * Example xml:
  * <code>
  * <?xml version="1.0" encoding="UTF-8"?>
@@ -18,33 +24,9 @@ namespace Omnipay\BillPay\Message;
  * @copyright 2016, Quillo GmbH
  * @license   MIT
  */
-class AuthorizeResponse extends Response
+class AuthorizeResponse extends AbstractResponse
 {
-    /**
-     * Gets the corrected address
-     *
-     * @return array|null
-     */
-    public function getCorrectedAddress()
-    {
-        if (!$this->hasCorrectedAddress()) {
-            return null;
-        }
-
-        return [
-            'street' => (string)$this->data->corrected_address['street'],
-            'streetNo' => (string)$this->data->corrected_address['streetNo'],
-            'zip' => (string)$this->data->corrected_address['zip'],
-            'city' => (string)$this->data->corrected_address['city'],
-            'country' => (string)$this->data->corrected_address['country']
-        ];
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasCorrectedAddress()
-    {
-        return isset($this->data->corrected_address);
-    }
+    use BaseDataTrait;
+    use CorrectedAddressTrait;
+    use InvoiceBankAccountTrait;
 }

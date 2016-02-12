@@ -4,10 +4,13 @@ namespace Omnipay\BillPay\Message;
 
 use Omnipay\BillPay\Customer;
 use Omnipay\BillPay\Item;
+use Omnipay\BillPay\Message\RequestData\ArticleDataTrait;
+use Omnipay\BillPay\Message\RequestData\CustomerDetailsTrait;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\ItemBag;
 use Omnipay\Tests\TestCase;
+use ReflectionClass;
 
 /**
  * Class AuthorizeRequestTest
@@ -81,6 +84,33 @@ class AuthorizeRequestTest extends TestCase
         $this->request->getData();
     }
 
+    public function testArticleDataTrait()
+    {
+        $mock = $this->getObjectForTrait(ArticleDataTrait::class);
+
+        self::setExpectedException(
+            InvalidRequestException::class,
+            'Trait can only be used inside instance of Omnipay\Common\Message\AbstractRequest'
+        );
+        $method = $this->getMethod($mock, 'appendArticleData');
+        $method->invokeArgs($mock, [new \SimpleXMLElement('<body/>')]);
+    }
+
+    public function testCustomerDetailsTrait()
+    {
+        $mock = $this->getObjectForTrait(CustomerDetailsTrait::class);
+
+        self::assertNull($mock->getCustomerDetails());
+        self::assertEquals($mock, $mock->setCustomerDetails(new Customer()));
+
+        self::setExpectedException(
+            InvalidRequestException::class,
+            'Trait can only be used inside instance of Omnipay\BillPay\Message\AuthorizeRequest'
+        );
+        $method = $this->getMethod($mock, 'appendCustomerDetails');
+        $method->invokeArgs($mock, [new \SimpleXMLElement('<body/>')]);
+    }
+
     public function testCardNotExist()
     {
         self::setExpectedException(
@@ -126,7 +156,10 @@ class AuthorizeRequestTest extends TestCase
 
     public function testItemsIncorrectType()
     {
-        self::setExpectedException(InvalidRequestException::class, 'Items must be of instance \Omnipay\BillPay\Item');
+        self::setExpectedException(
+            InvalidRequestException::class,
+            'All items must be of instance of Omnipay\BillPay\Item'
+        );
         $this->request->setItems(
             new ItemBag(
                 [
@@ -168,5 +201,20 @@ class AuthorizeRequestTest extends TestCase
         self::setExpectedException(InvalidRequestException::class, 'This request requires a payment method.');
         $this->request->setPaymentMethod(null);
         $this->request->getData();
+    }
+
+    /**
+     * @param $object
+     * @param $name
+     *
+     * @return \ReflectionMethod
+     */
+    private function getMethod($object, $name)
+    {
+        $class = new ReflectionClass($object);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+
+        return $method;
     }
 }

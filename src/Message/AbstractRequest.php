@@ -121,7 +121,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      *
      * @return string|null ISO-3166-1 Alpha3
      */
-    protected function getCountryCode($country)
+    public function getCountryCode($country)
     {
         $countries = [
             'germany' => 'DEU',

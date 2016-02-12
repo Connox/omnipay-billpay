@@ -2,8 +2,11 @@
 
 namespace Omnipay\BillPay\Message;
 
-use Omnipay\BillPay\Customer;
-use Omnipay\BillPay\Item;
+use Omnipay\BillPay\Message\RequestData\ArticleDataTrait;
+use Omnipay\BillPay\Message\RequestData\CustomerDetailsTrait;
+use Omnipay\BillPay\Message\RequestData\DataTrait;
+use Omnipay\BillPay\Message\RequestData\ShippingDetailsTrait;
+use Omnipay\BillPay\Message\RequestData\TotalTrait;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Message\ResponseInterface;
 use SimpleXMLElement;
@@ -19,35 +22,17 @@ use SimpleXMLElement;
  */
 class AuthorizeRequest extends AbstractRequest
 {
+    use DataTrait;
+    use CustomerDetailsTrait;
+    use ShippingDetailsTrait;
+    use ArticleDataTrait;
+    use TotalTrait;
+
     const PAYMENT_TYPE_INVOICE = 'invoice';
     const PAYMENT_TYPE_DIRECT_DEBIT = 'direct_debit';
     const PAYMENT_TYPE_TRANSACTION_CREDIT = 'transaction_credit';
     const PAYMENT_TYPE_PAY_LATER = 'pay_later';
     const PAYMENT_TYPE_COLLATERAL_PROMISE = 'collateral_promise';
-
-    private static $paymentTypes = [
-        self::PAYMENT_TYPE_INVOICE => 1,
-        self::PAYMENT_TYPE_DIRECT_DEBIT => 2,
-        self::PAYMENT_TYPE_TRANSACTION_CREDIT => 3,
-        self::PAYMENT_TYPE_PAY_LATER => 4,
-        self::PAYMENT_TYPE_COLLATERAL_PROMISE => 7
-    ];
-
-    /**
-     * @return int
-     */
-    public function getCaptureRequestNecessary()
-    {
-        return (int)$this->getParameter('captureRequestNecessary');
-    }
-
-    /**
-     * @return Customer|null
-     */
-    public function getCustomerDetails()
-    {
-        return $this->getParameter('customerDetails');
-    }
 
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
@@ -58,131 +43,15 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getData()
     {
-        if ($this->getCard() === null) {
-            throw new InvalidRequestException('Credit card and customer object required for address details.');
-        }
-
-        if ($this->getCustomerDetails() === null) {
-            throw new InvalidRequestException('Customer object required for additional details not covered by card.');
-        }
-
-        if ($this->getItems() === null || $this->getItems()->count() === 0) {
-            throw new InvalidRequestException('This request requires items.');
-        }
-
-        if (!$this->getPaymentMethod()) {
-            throw new InvalidRequestException('This request requires a payment method.');
-        }
-
         $data = $this->getBaseData();
 
-        // the customer has accepted the BillPay terms of service / the data protection policy, we assume that the
-        // gateway is only used after acceptance
-        $data['tcaccepted'] = 1;
-        $data['expecteddaystillshipping'] = $this->getExpectedDaysTillShipping();
-        $data['capturerequestnecessary'] = $this->getCaptureRequestNecessary();
-        $data['paymenttype'] = self::$paymentTypes[$this->getPaymentMethod()];
-
+        $this->appendData($data);
         $this->appendCustomerDetails($data);
         $this->appendShippingDetails($data);
         $this->appendArticleData($data);
         $this->appendTotal($data);
 
         return $data;
-    }
-
-    /**
-     * Gets the expected delay in shipping
-     *
-     * @return int
-     */
-    public function getExpectedDaysTillShipping()
-    {
-        return (int)$this->getParameter('expectedDaysTillShipping');
-    }
-
-    /**
-     * Gets the net rebate amount for the order
-     *
-     * @return string|null
-     */
-    public function getRebate()
-    {
-        return $this->getParameter('rebate');
-    }
-
-    /**
-     * Gets the gross rebate amount for the order
-     *
-     * @return string|null
-     */
-    public function getRebateGross()
-    {
-        return $this->getParameter('rebateGross');
-    }
-
-    /**
-     * Gets the shipping method name
-     *
-     * @return string|null
-     */
-    public function getShippingName()
-    {
-        return $this->getParameter('shippingName');
-    }
-
-    /**
-     * Gets the net amount of shipping cost for the order
-     *
-     * @return string|null
-     */
-    public function getShippingPrice()
-    {
-        return $this->getParameter('shippingPrice');
-    }
-
-    /**
-     * Gets the gross amount of shipping cost for the order
-     *
-     * @return string|null
-     */
-    public function getShippingPriceGross()
-    {
-        return $this->getParameter('shippingPriceGross');
-    }
-
-    /**
-     * @param int|bool $value
-     *
-     * @return AuthorizeRequest
-     */
-    public function setCaptureRequestNecessary($value)
-    {
-        return $this->setParameter('captureRequestNecessary', $value ? 1 : 0);
-    }
-
-    /**
-     * Sets the customer detail information
-     *
-     * @param Customer $customer
-     *
-     * @return AuthorizeRequest
-     */
-    public function setCustomerDetails($customer)
-    {
-        return $this->setParameter('customerDetails', $customer);
-    }
-
-    /**
-     * Sets the expected delay in shipping, required for authorize and pay
-     *
-     * @param int $value the expected delay in shipping
-     *
-     * @return AuthorizeRequest
-     */
-    public function setExpectedDaysTillShipping($value)
-    {
-        return $this->setParameter('expectedDaysTillShipping', (int)$value);
     }
 
     /**
@@ -201,214 +70,6 @@ class AuthorizeRequest extends AbstractRequest
         }
 
         return parent::setPaymentMethod($value);
-    }
-
-    /**
-     * Sets net rebate amount for the order
-     *
-     * @param float $rebate net rebate amount
-     *
-     * @return AuthorizeRequest
-     */
-    public function setRebate($rebate)
-    {
-        return $this->setParameter('rebate', $rebate);
-    }
-
-    /**
-     * Sets gross rebate amount for the order
-     *
-     * @param string $rebateGross gross rebate amount
-     *
-     * @return AuthorizeRequest
-     */
-    public function setRebateGross($rebateGross)
-    {
-        return $this->setParameter('rebateGross', $rebateGross);
-    }
-
-    /**
-     * Sets shipping method name (e.g. "Express")
-     *
-     * @param string $name
-     *
-     * @return AuthorizeRequest
-     */
-    public function setShippingName($name)
-    {
-        return $this->setParameter('shippingName', $name);
-    }
-
-    /**
-     * Sets net amount of shipping cost for the order
-     *
-     * @param float $price net amount of shipping cost
-     *
-     * @return AuthorizeRequest
-     */
-    public function setShippingPrice($price)
-    {
-        return $this->setParameter('shippingPrice', $price);
-    }
-
-    /**
-     * Sets gross amount of shipping cost for the order
-     *
-     * @param string $priceGross gross amount of shipping cost
-     *
-     * @return AuthorizeRequest
-     */
-    public function setShippingPriceGross($priceGross)
-    {
-        return $this->setParameter('shippingPriceGross', $priceGross);
-    }
-
-    /**
-     * @param SimpleXMLElement $element
-     *
-     * @throws InvalidRequestException
-     */
-    protected function appendArticleData(SimpleXMLElement $element)
-    {
-        $element->addChild('article_data');
-
-        foreach ($this->getItems()->all() as $pos => $item) {
-            if (!$item instanceof Item) {
-                throw new InvalidRequestException('Items must be of instance \\Omnipay\\BillPay\\Item');
-            }
-
-            /** @noinspection DisconnectedForeachInstructionInspection */
-            $element->article_data[0]->addChild('article');
-            $element->article_data[0]->article[$pos]['articleid'] = $item->getId();
-            $element->article_data[0]->article[$pos]['articlequantity'] = $item->getQuantity();
-            $element->article_data[0]->article[$pos]['articlename'] = $item->getName();
-            $element->article_data[0]->article[$pos]['articledescription'] = $item->getDescription();
-            $element->article_data[0]->article[$pos]['articleprice'] = bcmul($item->getPriceNet(), 100, 0);
-            $element->article_data[0]->article[$pos]['articlepricegross'] = bcmul($item->getPrice(), 100, 0);
-        }
-    }
-
-    /**
-     * @param SimpleXMLElement $element
-     *
-     * @throws InvalidRequestException
-     */
-    protected function appendCustomerDetails(SimpleXMLElement $element)
-    {
-        $card = $this->getCard();
-        $customer = $this->getCustomerDetails();
-
-        $element->addChild('customer_details');
-        $element->customer_details[0]['customerid'] = $customer->getId();
-        $element->customer_details[0]['customertype'] = $customer->getType();
-        $element->customer_details[0]['salutation'] = null;
-        $element->customer_details[0]['title'] = $card->getBillingTitle();
-        $element->customer_details[0]['firstName'] = $card->getBillingFirstName();
-        $element->customer_details[0]['lastName'] = $card->getBillingLastName();
-        $element->customer_details[0]['street'] = $card->getBillingAddress1();
-        $element->customer_details[0]['streetNo'] = null;
-        $element->customer_details[0]['addressAddition'] = $card->getBillingAddress2();
-        $element->customer_details[0]['zip'] = $card->getBillingPostcode();
-        $element->customer_details[0]['city'] = $card->getBillingCity();
-        $element->customer_details[0]['country'] = $this->getCountryCode($card->getBillingCountry());
-        $element->customer_details[0]['email'] = $card->getEmail();
-        $element->customer_details[0]['phone'] = $card->getBillingPhone();
-        $element->customer_details[0]['cellPhone'] = null;
-        $element->customer_details[0]['birthday'] = $card->getBirthday('Ymd');
-        $element->customer_details[0]['language'] = $customer->getLanguage();
-        $element->customer_details[0]['ip'] = $this->getClientIp();
-        $element->customer_details[0]['customerGroup'] = $customer->getGroup();
-    }
-
-    /**
-     * @param SimpleXMLElement $element
-     *
-     * @throws InvalidRequestException
-     */
-    protected function appendShippingDetails(SimpleXMLElement $element)
-    {
-        $card = $this->getCard();
-
-        $same = 1;
-
-        foreach (['Title', 'FirstName', 'LastName', 'Address1', 'Address2', 'Postcode', 'City', 'Country'] as $check) {
-            if ($card->{'getBilling' . $check}() !== $card->{'getShipping' . $check}()) {
-                $same = 0;
-            }
-        }
-
-        $element->addChild('shipping_details');
-
-        if ($same) {
-            $element->shipping_details[0]['useBillingAddress'] = 1;
-            $element->shipping_details[0]['salutation'] = null;
-            $element->shipping_details[0]['title'] = null;
-            $element->shipping_details[0]['firstName'] = null;
-            $element->shipping_details[0]['lastName'] = null;
-            $element->shipping_details[0]['street'] = null;
-            $element->shipping_details[0]['streetNo'] = null;
-            $element->shipping_details[0]['addressAddition'] = null;
-            $element->shipping_details[0]['zip'] = null;
-            $element->shipping_details[0]['city'] = null;
-            $element->shipping_details[0]['country'] = null;
-            $element->shipping_details[0]['phone'] = null;
-            $element->shipping_details[0]['cellPhone'] = null;
-        } else {
-            $element->shipping_details[0]['useBillingAddress'] = 0;
-            $element->shipping_details[0]['salutation'] = null;
-            $element->shipping_details[0]['title'] = $card->getShippingTitle();
-            $element->shipping_details[0]['firstName'] = $card->getShippingFirstName();
-            $element->shipping_details[0]['lastName'] = $card->getShippingLastName();
-            $element->shipping_details[0]['street'] = $card->getShippingAddress1();
-            $element->shipping_details[0]['streetNo'] = null;
-            $element->shipping_details[0]['addressAddition'] = $card->getShippingAddress2();
-            $element->shipping_details[0]['zip'] = $card->getShippingPostcode();
-            $element->shipping_details[0]['city'] = $card->getShippingCity();
-            $element->shipping_details[0]['country'] = $this->getCountryCode($card->getShippingCountry());
-            $element->shipping_details[0]['phone'] = $card->getShippingPhone();
-            $element->shipping_details[0]['cellPhone'] = null;
-        }
-    }
-
-    protected function appendTotal(SimpleXMLElement $element)
-    {
-        $totalNet = 0.0;
-        $totalGross = 0.0;
-
-        foreach ($this->getItems()->all() as $pos => $item) {
-            /** @var Item $item */
-            $totalNet = bcadd($totalNet, bcmul($item->getPriceNet(), $item->getQuantity(), 8), 8);
-            $totalGross = bcadd($totalGross, bcmul($item->getPrice(), $item->getQuantity(), 8), 8);
-        }
-
-        // add shipping
-        $totalNet = bcadd($totalNet, $this->getShippingPrice(), 8);
-        $totalGross = bcadd($totalGross, $this->getShippingPriceGross(), 8);
-
-        // remove rebates
-        $totalNet = bcsub($totalNet, $this->getRebate(), 8);
-        $totalGross = bcsub($totalGross, $this->getRebateGross(), 8);
-
-        if (bccomp($totalGross, $this->getAmount(), 8) !== 0) {
-            throw new InvalidRequestException(
-                sprintf(
-                    'Amount (%0.2f) differs from calculated amount (%0.2f) (items + shipping - rebate).',
-                    $totalGross,
-                    $this->getAmount()
-                )
-            );
-        }
-
-        $element->addChild('total');
-        $element->total[0]['shippingname'] = $this->getShippingName();
-        $element->total[0]['shippingprice'] = round(bcmul($this->getShippingPrice(), 100, 8));
-        $element->total[0]['shippingpricegross'] = round(bcmul($this->getShippingPriceGross(), 100, 8));
-        $element->total[0]['rebate'] = round(bcmul($this->getRebate(), 100, 8));
-        $element->total[0]['rebategross'] = round(bcmul($this->getRebateGross(), 100, 8));
-        $element->total[0]['carttotalprice'] = round(bcmul($totalNet, 100, 8));
-        $element->total[0]['carttotalpricegross'] = round(bcmul($totalGross, 100, 8));
-        $element->total[0]['currency'] = $this->getCurrency();
-        $element->total[0]['reference'] = $this->getTransactionId();
     }
 
     /**

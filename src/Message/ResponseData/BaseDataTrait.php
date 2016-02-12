@@ -1,18 +1,20 @@
 <?php
 
-namespace Omnipay\BillPay\Message;
+namespace Omnipay\BillPay\Message\ResponseData;
 
-use Omnipay\Common\Message\AbstractResponse;
+use SimpleXMLElement;
 
 /**
- * BillPay Response
+ * Access base data in the response, internal usage only
+ *
+ * @property SimpleXMLElement $data
  *
  * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
  */
-class Response extends AbstractResponse
+trait BaseDataTrait
 {
     /**
      * Response code
