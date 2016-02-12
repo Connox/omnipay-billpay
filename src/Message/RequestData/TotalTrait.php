@@ -5,6 +5,7 @@ namespace Omnipay\BillPay\Message\RequestData;
 use Omnipay\BillPay\Item;
 use Omnipay\BillPay\Message\AuthorizeRequest;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\ItemBag;
 use Omnipay\Common\Message\AbstractRequest;
 use SimpleXMLElement;
 
@@ -19,13 +20,34 @@ use SimpleXMLElement;
 trait TotalTrait
 {
     /**
+     * Validates and returns the formated amount.
+     *
+     * @return string The amount formatted to the correct number of decimal places for the selected currency.
+     */
+    abstract public function getAmount();
+
+    /**
+     * Get the payment currency code.
+     *
+     * @return string
+     */
+    abstract public function getCurrency();
+
+    /**
+     * A list of items in this order
+     *
+     * @return ItemBag|null A bag containing items in this order
+     */
+    abstract public function getItems();
+
+    /**
      * Gets the net rebate amount for the order
      *
      * @return string|null
      */
     public function getRebate()
     {
-        return method_exists($this, 'getParameter') ? $this->getParameter('rebate') : null;
+        return $this->getParameter('rebate');
     }
 
     /**
@@ -35,7 +57,7 @@ trait TotalTrait
      */
     public function getRebateGross()
     {
-        return method_exists($this, 'getParameter') ? $this->getParameter('rebateGross') : null;
+        return $this->getParameter('rebateGross');
     }
 
     /**
@@ -45,7 +67,7 @@ trait TotalTrait
      */
     public function getShippingName()
     {
-        return method_exists($this, 'getParameter') ? $this->getParameter('shippingName') : null;
+        return $this->getParameter('shippingName');
     }
 
     /**
@@ -55,7 +77,7 @@ trait TotalTrait
      */
     public function getShippingPrice()
     {
-        return method_exists($this, 'getParameter') ? $this->getParameter('shippingPrice') : null;
+        return $this->getParameter('shippingPrice');
     }
 
     /**
@@ -65,8 +87,15 @@ trait TotalTrait
      */
     public function getShippingPriceGross()
     {
-        return method_exists($this, 'getParameter') ? $this->getParameter('shippingPriceGross') : null;
+        return $this->getParameter('shippingPriceGross');
     }
+
+    /**
+     * Get the transaction ID.
+     *
+     * @return string
+     */
+    abstract public function getTransactionId();
 
     /**
      * Sets net rebate amount for the order
@@ -77,7 +106,7 @@ trait TotalTrait
      */
     public function setRebate($rebate)
     {
-        return method_exists($this, 'setParameter') ? $this->setParameter('rebate', $rebate) : $this;
+        return $this->setParameter('rebate', $rebate);
     }
 
     /**
@@ -89,7 +118,7 @@ trait TotalTrait
      */
     public function setRebateGross($rebateGross)
     {
-        return method_exists($this, 'setParameter') ? $this->setParameter('rebateGross', $rebateGross) : $this;
+        return $this->setParameter('rebateGross', $rebateGross);
     }
 
     /**
@@ -101,7 +130,7 @@ trait TotalTrait
      */
     public function setShippingName($name)
     {
-        return method_exists($this, 'setParameter') ? $this->setParameter('shippingName', $name) : $this;
+        return $this->setParameter('shippingName', $name);
     }
 
     /**
@@ -113,7 +142,7 @@ trait TotalTrait
      */
     public function setShippingPrice($price)
     {
-        return method_exists($this, 'setParameter') ? $this->setParameter('shippingPrice', $price) : $this;
+        return $this->setParameter('shippingPrice', $price);
     }
 
     /**
@@ -125,7 +154,7 @@ trait TotalTrait
      */
     public function setShippingPriceGross($priceGross)
     {
-        return method_exists($this, 'setParameter') ? $this->setParameter('shippingPriceGross', $priceGross) : $this;
+        return $this->setParameter('shippingPriceGross', $priceGross);
     }
 
     /**
@@ -135,12 +164,6 @@ trait TotalTrait
      */
     protected function appendTotal(SimpleXMLElement $data)
     {
-        /** @var AbstractRequest|TotalTrait $this */
-
-        if (!$this instanceof AbstractRequest) {
-            throw new InvalidRequestException('Trait can only be used inside instance of ' . AbstractRequest::class);
-        }
-
         if ($this->getItems() === null || $this->getItems()->count() === 0) {
             throw new InvalidRequestException('This request requires items.');
         }
@@ -183,4 +206,23 @@ trait TotalTrait
         $data->total[0]['currency'] = $this->getCurrency();
         $data->total[0]['reference'] = $this->getTransactionId();
     }
+
+    /**
+     * Get a single parameter.
+     *
+     * @param string $key The parameter key
+     *
+     * @return mixed
+     */
+    abstract protected function getParameter($key);
+
+    /**
+     * Set a single parameter
+     *
+     * @param string $key   The parameter key
+     * @param mixed  $value The value to set
+     *
+     * @return AbstractRequest Provides a fluent interface
+     */
+    abstract protected function setParameter($key, $value);
 }

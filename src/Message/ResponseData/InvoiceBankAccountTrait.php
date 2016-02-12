@@ -7,8 +7,6 @@ use SimpleXMLElement;
 /**
  * Access invoice bank account in the response
  *
- * @property SimpleXMLElement $data
- *
  * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
@@ -16,6 +14,11 @@ use SimpleXMLElement;
  */
 trait InvoiceBankAccountTrait
 {
+    /**
+     * @return SimpleXMLElement
+     */
+    abstract public function getData();
+
     /**
      * Extracts the invoice bank account data if it exists
      *
@@ -28,11 +31,11 @@ trait InvoiceBankAccountTrait
         }
 
         return [
-            'account_holder' => (string)$this->data->invoice_bank_account['account_holder'],
-            'account_number' => (string)$this->data->invoice_bank_account['account_number'],
-            'bank_code' => (string)$this->data->invoice_bank_account['bank_code'],
-            'bank_name' => (string)$this->data->invoice_bank_account['bank_name'],
-            'invoice_reference' => (string)$this->data->invoice_bank_account['invoice_reference']
+            'account_holder' => (string)$this->getData()->invoice_bank_account['account_holder'],
+            'account_number' => (string)$this->getData()->invoice_bank_account['account_number'],
+            'bank_code' => (string)$this->getData()->invoice_bank_account['bank_code'],
+            'bank_name' => (string)$this->getData()->invoice_bank_account['bank_name'],
+            'invoice_reference' => (string)$this->getData()->invoice_bank_account['invoice_reference']
         ];
     }
 
@@ -43,6 +46,6 @@ trait InvoiceBankAccountTrait
      */
     public function hasInvoiceBankAccount()
     {
-        return $this->data instanceof SimpleXMLElement && isset($this->data->invoice_bank_account);
+        return isset($this->getData()->invoice_bank_account);
     }
 }

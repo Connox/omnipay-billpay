@@ -2,7 +2,7 @@
 
 namespace Omnipay\BillPay\Message\RequestData;
 
-use Omnipay\BillPay\Message\AuthorizeRequest;
+use Omnipay\Common\CreditCard;
 use Omnipay\Common\Exception\InvalidRequestException;
 use SimpleXMLElement;
 
@@ -17,18 +17,26 @@ use SimpleXMLElement;
 trait ShippingDetailsTrait
 {
     /**
+     * Get the card.
+     *
+     * @return CreditCard
+     */
+    abstract public function getCard();
+
+    /**
+     * @param string $country
+     *
+     * @return string|null ISO-3166-1 Alpha3
+     */
+    abstract public function getCountryCode($country);
+
+    /**
      * @param SimpleXMLElement $data
      *
      * @throws InvalidRequestException
      */
     protected function appendShippingDetails(SimpleXMLElement $data)
     {
-        /** @var AuthorizeRequest $this */
-
-        if (!$this instanceof AuthorizeRequest) {
-            throw new InvalidRequestException('Trait can only be used inside instance of ' . AuthorizeRequest::class);
-        }
-
         $card = $this->getCard();
 
         if ($card === null) {

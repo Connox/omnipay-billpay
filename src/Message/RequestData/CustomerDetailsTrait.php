@@ -4,7 +4,9 @@ namespace Omnipay\BillPay\Message\RequestData;
 
 use Omnipay\BillPay\Customer;
 use Omnipay\BillPay\Message\AuthorizeRequest;
+use Omnipay\Common\CreditCard;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Message\AbstractRequest;
 use SimpleXMLElement;
 
 /**
@@ -18,12 +20,33 @@ use SimpleXMLElement;
 trait CustomerDetailsTrait
 {
     /**
+     * Get the card.
+     *
+     * @return CreditCard
+     */
+    abstract public function getCard();
+
+    /**
+     * Get the client IP address.
+     *
+     * @return string
+     */
+    abstract public function getClientIp();
+
+    /**
+     * @param string $country
+     *
+     * @return string|null ISO-3166-1 Alpha3
+     */
+    abstract public function getCountryCode($country);
+
+    /**
      * @return null|Customer
      * @throws InvalidRequestException
      */
     public function getCustomerDetails()
     {
-        return method_exists($this, 'getParameter') ? $this->getParameter('customerDetails') : null;
+        return $this->getParameter('customerDetails');
     }
 
     /**
@@ -35,7 +58,7 @@ trait CustomerDetailsTrait
      */
     public function setCustomerDetails($customer)
     {
-        return method_exists($this, 'setParameter') ? $this->setParameter('customerDetails', $customer) : $this;
+        return $this->setParameter('customerDetails', $customer);
     }
 
     /**
@@ -45,12 +68,6 @@ trait CustomerDetailsTrait
      */
     protected function appendCustomerDetails(SimpleXMLElement $data)
     {
-        /** @var AuthorizeRequest $this */
-
-        if (!$this instanceof AuthorizeRequest) {
-            throw new InvalidRequestException('Trait can only be used inside instance of ' . AuthorizeRequest::class);
-        }
-
         $card = $this->getCard();
         $customer = $this->getCustomerDetails();
 
@@ -83,4 +100,23 @@ trait CustomerDetailsTrait
         $data->customer_details[0]['ip'] = $this->getClientIp();
         $data->customer_details[0]['customerGroup'] = $customer->getGroup();
     }
+
+    /**
+     * Get a single parameter.
+     *
+     * @param string $key The parameter key
+     *
+     * @return mixed
+     */
+    abstract protected function getParameter($key);
+
+    /**
+     * Set a single parameter
+     *
+     * @param string $key   The parameter key
+     * @param mixed  $value The value to set
+     *
+     * @return AbstractRequest Provides a fluent interface
+     */
+    abstract protected function setParameter($key, $value);
 }

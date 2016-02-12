@@ -4,6 +4,7 @@ namespace Omnipay\BillPay\Message\RequestData;
 
 use Omnipay\BillPay\Message\AuthorizeRequest;
 use Omnipay\Common\Exception\InvalidRequestException;
+use Omnipay\Common\Message\AbstractRequest;
 use SimpleXMLElement;
 
 /**
@@ -29,7 +30,7 @@ trait DataTrait
      */
     public function getCaptureRequestNecessary()
     {
-        return method_exists($this, 'getParameter') ? (int)$this->getParameter('captureRequestNecessary') : 0;
+        return (int)$this->getParameter('captureRequestNecessary');
     }
 
     /**
@@ -39,8 +40,15 @@ trait DataTrait
      */
     public function getExpectedDaysTillShipping()
     {
-        return method_exists($this, 'getParameter') ? (int)$this->getParameter('expectedDaysTillShipping') : 0;
+        return (int)$this->getParameter('expectedDaysTillShipping');
     }
+
+    /**
+     * Get the payment issuer.
+     *
+     * @return string
+     */
+    abstract public function getPaymentMethod();
 
     /**
      * @param int|bool $value
@@ -49,9 +57,7 @@ trait DataTrait
      */
     public function setCaptureRequestNecessary($value)
     {
-        $value = $value ? 1 : 0;
-
-        return method_exists($this, 'setParameter') ? $this->setParameter('captureRequestNecessary', $value) : $this;
+        return $this->setParameter('captureRequestNecessary', $value ? 1 : 0);
     }
 
     /**
@@ -63,7 +69,7 @@ trait DataTrait
      */
     public function setExpectedDaysTillShipping($value)
     {
-        return method_exists($this, 'setParameter') ? $this->setParameter('expectedDaysTillShipping', $value) : $this;
+        return $this->setParameter('expectedDaysTillShipping', $value);
     }
 
     /**
@@ -73,8 +79,6 @@ trait DataTrait
      */
     protected function appendData(SimpleXMLElement $data)
     {
-        /** @var AuthorizeRequest $this */
-
         if (!$this->getPaymentMethod()) {
             throw new InvalidRequestException('This request requires a payment method.');
         }
@@ -86,4 +90,23 @@ trait DataTrait
         $data['capturerequestnecessary'] = $this->getCaptureRequestNecessary();
         $data['paymenttype'] = self::$paymentTypes[$this->getPaymentMethod()];
     }
+
+    /**
+     * Get a single parameter.
+     *
+     * @param string $key The parameter key
+     *
+     * @return mixed
+     */
+    abstract protected function getParameter($key);
+
+    /**
+     * Set a single parameter
+     *
+     * @param string $key   The parameter key
+     * @param mixed  $value The value to set
+     *
+     * @return AbstractRequest Provides a fluent interface
+     */
+    abstract protected function setParameter($key, $value);
 }

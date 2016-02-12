@@ -7,8 +7,6 @@ use SimpleXMLElement;
 /**
  * Access base data in the response, internal usage only
  *
- * @property SimpleXMLElement $data
- *
  * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
@@ -17,13 +15,20 @@ use SimpleXMLElement;
 trait BaseDataTrait
 {
     /**
+     * @return SimpleXMLElement
+     */
+    abstract public function getData();
+
+    /**
      * Response code
      *
      * @return null|string A response code from the payment gateway
      */
     public function getCode()
     {
-        return (string)$this->data['error_code'] ? : null;
+        $data = $this->getData();
+
+        return (string)$data['error_code'] ? : null;
     }
 
     /**
@@ -33,7 +38,9 @@ trait BaseDataTrait
      */
     public function getMessage()
     {
-        return (string)$this->data['customer_message'] ? : null;
+        $data = $this->getData();
+
+        return (string)$data['customer_message'] ? : null;
     }
 
     /**
@@ -43,7 +50,9 @@ trait BaseDataTrait
      */
     public function getTransactionReference()
     {
-        return (string)$this->data['bptid'] ? : null;
+        $data = $this->getData();
+
+        return (string)$data['bptid'] ? : null;
     }
 
     /**
@@ -53,6 +62,8 @@ trait BaseDataTrait
      */
     public function isSuccessful()
     {
-        return (string)$this->data['error_code'] === '0';
+        $data = $this->getData();
+
+        return (string)$data['error_code'] === '0';
     }
 }

@@ -4,7 +4,7 @@ namespace Omnipay\BillPay\Message\RequestData;
 
 use Omnipay\BillPay\Item;
 use Omnipay\Common\Exception\InvalidRequestException;
-use Omnipay\Common\Message\AbstractRequest;
+use Omnipay\Common\ItemBag;
 use SimpleXMLElement;
 
 /**
@@ -18,18 +18,19 @@ use SimpleXMLElement;
 trait ArticleDataTrait
 {
     /**
+     * A list of items in this order
+     *
+     * @return ItemBag|null A bag containing items in this order
+     */
+    abstract public function getItems();
+
+    /**
      * @param SimpleXMLElement $data
      *
      * @throws InvalidRequestException
      */
     protected function appendArticleData(SimpleXMLElement $data)
     {
-        /** @var AbstractRequest $this */
-
-        if (!$this instanceof AbstractRequest) {
-            throw new InvalidRequestException('Trait can only be used inside instance of ' . AbstractRequest::class);
-        }
-
         if ($this->getItems() === null || $this->getItems()->count() === 0) {
             throw new InvalidRequestException('This request requires items.');
         }

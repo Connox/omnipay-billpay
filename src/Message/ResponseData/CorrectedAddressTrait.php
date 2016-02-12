@@ -7,8 +7,6 @@ use SimpleXMLElement;
 /**
  * Access corrected address in the response, internal usage only
  *
- * @property SimpleXMLElement $data
- *
  * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
@@ -28,19 +26,24 @@ trait CorrectedAddressTrait
         }
 
         return [
-            'street' => (string)$this->data->corrected_address['street'],
-            'streetNo' => (string)$this->data->corrected_address['streetNo'],
-            'zip' => (string)$this->data->corrected_address['zip'],
-            'city' => (string)$this->data->corrected_address['city'],
-            'country' => (string)$this->data->corrected_address['country']
+            'street' => (string)$this->getData()->corrected_address['street'],
+            'streetNo' => (string)$this->getData()->corrected_address['streetNo'],
+            'zip' => (string)$this->getData()->corrected_address['zip'],
+            'city' => (string)$this->getData()->corrected_address['city'],
+            'country' => (string)$this->getData()->corrected_address['country']
         ];
     }
+
+    /**
+     * @return SimpleXMLElement
+     */
+    abstract public function getData();
 
     /**
      * @return bool
      */
     public function hasCorrectedAddress()
     {
-        return $this->data instanceof SimpleXMLElement && isset($this->data->corrected_address);
+        return isset($this->getData()->corrected_address);
     }
 }
