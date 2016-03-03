@@ -5,6 +5,7 @@ namespace Omnipay\BillPay\Message;
 use Omnipay\BillPay\Message\RequestData\ArticleDataTrait;
 use Omnipay\BillPay\Message\RequestData\CustomerDetailsTrait;
 use Omnipay\BillPay\Message\RequestData\DataTrait;
+use Omnipay\BillPay\Message\RequestData\RateTrait;
 use Omnipay\BillPay\Message\RequestData\ShippingDetailsTrait;
 use Omnipay\BillPay\Message\RequestData\TotalTrait;
 use Omnipay\Common\Exception\InvalidRequestException;
@@ -27,6 +28,7 @@ class AuthorizeRequest extends AbstractRequest
     use ShippingDetailsTrait;
     use ArticleDataTrait;
     use TotalTrait;
+    use RateTrait;
 
     const PAYMENT_TYPE_INVOICE = 'invoice';
     const PAYMENT_TYPE_DIRECT_DEBIT = 'direct_debit';
@@ -50,6 +52,7 @@ class AuthorizeRequest extends AbstractRequest
         $this->appendShippingDetails($data);
         $this->appendArticleData($data);
         $this->appendTotal($data);
+        $this->appendRate($data);
 
         return $data;
     }
