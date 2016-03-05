@@ -61,6 +61,7 @@ trait ShippingDetailsTrait
 
         if (!$this->hasSharedAddress()) {
             $data->shipping_details[0]['useBillingAddress'] = 0;
+            $data->shipping_details[0]['salutation'] = $card->getGender();
             $data->shipping_details[0]['title'] = $card->getShippingTitle();
             $data->shipping_details[0]['firstName'] = $card->getShippingFirstName();
             $data->shipping_details[0]['lastName'] = $card->getShippingLastName();

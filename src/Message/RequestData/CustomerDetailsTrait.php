@@ -82,7 +82,7 @@ trait CustomerDetailsTrait
         $data->addChild('customer_details');
         $data->customer_details[0]['customerid'] = $customer->getId();
         $data->customer_details[0]['customertype'] = $customer->getType();
-        $data->customer_details[0]['salutation'] = null;
+        $data->customer_details[0]['salutation'] = $card->getGender();
         $data->customer_details[0]['title'] = $card->getBillingTitle();
         $data->customer_details[0]['firstName'] = $card->getBillingFirstName();
         $data->customer_details[0]['lastName'] = $card->getBillingLastName();

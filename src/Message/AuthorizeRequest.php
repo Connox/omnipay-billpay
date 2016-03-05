@@ -3,6 +3,7 @@
 namespace Omnipay\BillPay\Message;
 
 use Omnipay\BillPay\Message\RequestData\ArticleDataTrait;
+use Omnipay\BillPay\Message\RequestData\BankAccountTrait;
 use Omnipay\BillPay\Message\RequestData\CustomerDetailsTrait;
 use Omnipay\BillPay\Message\RequestData\DataTrait;
 use Omnipay\BillPay\Message\RequestData\RateTrait;
@@ -29,6 +30,7 @@ class AuthorizeRequest extends AbstractRequest
     use ArticleDataTrait;
     use TotalTrait;
     use RateTrait;
+    use BankAccountTrait;
 
     const PAYMENT_TYPE_INVOICE = 'invoice';
     const PAYMENT_TYPE_DIRECT_DEBIT = 'direct_debit';
@@ -53,6 +55,7 @@ class AuthorizeRequest extends AbstractRequest
         $this->appendArticleData($data);
         $this->appendTotal($data);
         $this->appendRate($data);
+        $this->appendBankAccount($data);
 
         return $data;
     }
