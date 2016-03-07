@@ -44,4 +44,12 @@ class RefundRequest extends AbstractRequest
     {
         return $this->response = new RefundResponse($this, $response);
     }
+
+    /**
+     * @return string
+     */
+    protected function getEndpoint()
+    {
+        return parent::getEndpoint() . '/cancel';
+    }
 }

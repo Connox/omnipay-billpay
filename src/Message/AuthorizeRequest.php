@@ -87,4 +87,12 @@ class AuthorizeRequest extends AbstractRequest
     {
         return $this->response = new AuthorizeResponse($this, $response);
     }
+
+    /**
+     * @return string
+     */
+    protected function getEndpoint()
+    {
+        return parent::getEndpoint() . '/preauthorize';
+    }
 }
