@@ -89,7 +89,9 @@ class AuthorizeRequestTest extends TestCase
 
     public function testBankAccount()
     {
-
+        self::assertEquals('John Doe', $this->request->getAccountHolder());
+        self::assertEquals('DE12500105170648489890', $this->request->getAccountNumber());
+        self::assertEquals('', $this->request->getSortCode());
     }
 
     public function testAmountDifference()
