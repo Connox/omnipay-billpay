@@ -98,7 +98,7 @@ trait BankAccountTrait
      */
     protected function appendBankAccount(SimpleXMLElement $data)
     {
-        if ($this->getPaymentMethod() !== 'invoice') {
+        if ($this->getPaymentMethod() === 'invoice') {
             return;
         }
 

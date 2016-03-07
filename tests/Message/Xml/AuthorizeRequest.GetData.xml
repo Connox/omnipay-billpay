@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data api_version="1.5.10" tcaccepted="1" expecteddaystillshipping="2" capturerequestnecessary="0" paymenttype="1">
+<data api_version="1.5.10" tcaccepted="1" expecteddaystillshipping="2" capturerequestnecessary="0" paymenttype="4">
     <default_parms mid="" pid="" bpsecure=""/>
     <customer_details customerid="" customertype="n" salutation="" title="" firstName="" lastName="" street=""
                       streetNo="" addressAddition="" zip="" city="" country="" email="" phone="" cellPhone=""
@@ -14,4 +14,6 @@
     </article_data>
     <total shippingname="Express" shippingprice="416" shippingpricegross="495" rebate="84" rebategross="100"
            carttotalprice="2013" carttotalpricegross="2395" currency="EUR" reference="ORDER-12345678"/>
+    <rate_request term="24" ratecount="12" totalamount="3456"/>
+    <bank_account accountholder="" accountnumber="" sortcode=""/>
 </data>

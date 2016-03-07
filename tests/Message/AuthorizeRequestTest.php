@@ -31,7 +31,7 @@ class AuthorizeRequestTest extends TestCase
         $this->request->initialize(
             [
                 'transactionId' => 'ORDER-12345678',
-                'paymentMethod' => AuthorizeRequest::PAYMENT_TYPE_INVOICE,
+                'paymentMethod' => AuthorizeRequest::PAYMENT_TYPE_PAY_LATER,
                 'expectedDaysTillShipping' => 2,
                 'card' => new CreditCard(),
                 'customerDetails' => new Customer(),
@@ -42,6 +42,14 @@ class AuthorizeRequestTest extends TestCase
 
         $this->request->setShippingName('Express')->setShippingPrice(4.1596)->setShippingPriceGross(4.95);
         $this->request->setRebate(0.84)->setRebateGross(1.0);
+
+        $this->request->setAccountHolder('John Doe');
+        $this->request->setAccountNumber('DE12500105170648489890');
+        $this->request->setSortCode('');
+
+        $this->request->setRateCount(12);
+        $this->request->setRateTerm(24);
+        $this->request->setRateTotalAmount('34.56');
 
         $this->request->setItems(
             new ItemBag(
@@ -69,6 +77,19 @@ class AuthorizeRequestTest extends TestCase
                 ]
             )
         );
+
+    }
+
+    public function testRate()
+    {
+        self::assertEquals('12', $this->request->getRateCount());
+        self::assertEquals('24', $this->request->getRateTerm());
+        self::assertEquals('34.56', $this->request->getRateTotalAmount());
+    }
+
+    public function testBankAccount()
+    {
+
     }
 
     public function testAmountDifference()
