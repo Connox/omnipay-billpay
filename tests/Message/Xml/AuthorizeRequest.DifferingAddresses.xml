@@ -15,5 +15,5 @@
     <total shippingname="Express" shippingprice="416" shippingpricegross="495" rebate="84" rebategross="100"
            carttotalprice="2013" carttotalpricegross="2395" currency="EUR" reference="ORDER-12345678"/>
     <rate_request term="24" ratecount="12" totalamount="3456"/>
-    <bank_account accountholder="" accountnumber="" sortcode=""/>
+    <bank_account accountholder="John Doe" accountnumber="DE12500105170648489890" sortcode=""/>
 </data>
