@@ -11,7 +11,7 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/build-status/master)
-[![Travis](https://img.shields.io/travis/Quillo/omnipay-billpay.svg?style=flat-square)](https://travis-ci.org/Quillo/omnipay-billpay)
+[![Travis](https://img.shields.io/travis/Quillo/omnipay-billpay.svg?style=flat)](https://travis-ci.org/Quillo/omnipay-billpay)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.6+. This package implements BillPay support for Omnipay.
