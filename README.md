@@ -4,12 +4,13 @@
 
 **BillPay driver for the Omnipay PHP payment processing library**
 
-[![Software License](https://img.shields.io/packagist/l/quillo/omnipay-billpay.svg?style=flat-square)](LICENSE)
-[![Packagist Version](https://img.shields.io/packagist/v/quillo/omnipay-billpay.svg?style=flat-square)](https://packagist.org/packages/quillo/omnipay-billpay)
-[![Total Downloads](https://img.shields.io/packagist/dt/quillo/omnipay-billpay.svg?style=flat-square)](https://packagist.org/packages/quillo/omnipay-billpay)
-[![Scrutinizer](https://img.shields.io/scrutinizer/g/Quillo/omnipay-billpay.svg?style=flat-square)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/)
-[![Scrutinizer Coverage](https://img.shields.io/scrutinizer/coverage/g/Quillo/omnipay-billpay.svg?style=flat-square)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/)
-[![Scrutinizer Build](https://img.shields.io/scrutinizer/build/g/Quillo/omnipay-billpay.svg?style=flat-square)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/)
+[![License](https://poser.pugx.org/quillo/omnipay-billpay/license)](https://packagist.org/packages/quillo/omnipay-billpay)
+[![Latest Stable Version](https://poser.pugx.org/quillo/omnipay-billpay/v/stable)](https://packagist.org/packages/quillo/omnipay-billpay)
+[![Latest Unstable Version](https://poser.pugx.org/quillo/omnipay-billpay/v/unstable)](https://packagist.org/packages/quillo/omnipay-billpay)
+[![Total Downloads](https://poser.pugx.org/quillo/omnipay-billpay/downloads)](https://packagist.org/packages/quillo/omnipay-billpay)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/build-status/master)
 [![Travis](https://img.shields.io/travis/Quillo/omnipay-billpay.svg?style=flat-square)](https://travis-ci.org/Quillo/omnipay-billpay)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
