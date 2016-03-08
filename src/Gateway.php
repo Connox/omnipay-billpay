@@ -4,6 +4,7 @@ namespace Omnipay\BillPay;
 
 use Omnipay\BillPay\Message\AuthorizeRequest;
 use Omnipay\BillPay\Message\CaptureRequest;
+use Omnipay\BillPay\Message\InvoiceCreatedRequest;
 use Omnipay\BillPay\Message\RefundRequest;
 use Omnipay\Common\AbstractGateway;
 
@@ -83,6 +84,18 @@ class Gateway extends AbstractGateway
     public function getSecurityKey()
     {
         return $this->getParameter('securityKey');
+    }
+
+    /**
+     * Creates a invoice created request
+     *
+     * @param array $parameters
+     *
+     * @return InvoiceCreatedRequest
+     */
+    public function invoiceCreated(array $parameters = [])
+    {
+        return $this->createRequest(InvoiceCreatedRequest::class, $parameters);
     }
 
     /**

@@ -206,4 +206,15 @@ class GatewayTest extends GatewayTestCase
         self::assertTrue($response->isSuccessful());
         self::assertNull($response->getMessage());
     }
+
+
+    public function testInvoiceCreatedSuccess()
+    {
+        $this->setMockHttpResponse('InvoiceCreated.txt');
+
+        $response = $this->gateway->invoiceCreated($this->options)->send();
+
+        self::assertTrue($response->isSuccessful());
+        self::assertNull($response->getMessage());
+    }
 }
