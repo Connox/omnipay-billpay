@@ -1,7 +1,7 @@
 HTTP/1.1 200 OK
 Date: Fri, 28 Jan 2016 15:24:21 GMT
 Server: Apache
-Content-Length: 212
+Content-Length: 502
 Connection: close
 Content-Type: application/xml; charset=utf-8
 
@@ -11,4 +11,10 @@ Content-Type: application/xml; charset=utf-8
       error_code="0"
       merchant_message=""
       status="APPROVED">
+
+    <invoice_bank_account account_holder="BillPay GmbH"
+                          account_number="DE07312312312312312"
+                          bank_code="BELADEBEXXX"
+                          bank_name="Sparkasse Berlin"
+                          invoice_reference="BP555666777/9999"/>
 </data>

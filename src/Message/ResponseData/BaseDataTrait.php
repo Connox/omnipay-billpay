@@ -43,6 +43,18 @@ trait BaseDataTrait
     }
 
     /**
+     * Status information of the response i.e. APPROVED
+     *
+     * @return null|string
+     */
+    public function getStatus()
+    {
+        $data = $this->getData();
+
+        return (string)$data['status'] ? : null;
+    }
+
+    /**
      * Gateway Reference
      *
      * @return null|string A reference provided by the gateway to represent this transaction

@@ -45,6 +45,8 @@ trait InvoiceBankAccountTrait
      */
     public function hasInvoiceBankAccount()
     {
-        return isset($this->getData()->invoice_bank_account);
+        $data = $this->getData();
+
+        return isset($data->invoice_bank_account) && (string)$data->invoice_bank_account['account_holder'] !== '';
     }
 }

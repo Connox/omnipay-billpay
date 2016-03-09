@@ -1,0 +1,56 @@
+HTTP/1.1 200 OK
+Date: Fri, 28 Jan 2016 15:24:21 GMT
+Server: Apache
+Content-Length: 2387
+Connection: close
+Content-Type: application/xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<data bptid="1aa2fb2d-2b78-4393-bf06-be0012dda337"
+      customer_message=""
+      error_code="0"
+      merchant_message=""
+      status="APPROVED">
+
+    <hire_purchase>
+        <instl_plan num_inst="24">
+            <calc>
+                <duration>25</duration>
+                <fee_percent>18.00</fee_percent>
+                <fee_total>12582</fee_total>
+                <pre_payment>0</pre_payment>
+                <total_amount>86382</total_amount>
+                <eff_anual>18.18</eff_anual>
+                <nominal>17.28</nominal>
+            </calc>
+            <instl_list>
+                <instl date="20160309" type="immediate">10191</instl>
+                <instl date="20160409" type="first">2924</instl>
+                <instl date="20160509" type="date">2912</instl>
+                <instl date="20160609" type="date">2912</instl>
+                <instl date="20160709" type="date">2912</instl>
+                <instl date="20160809" type="date">2912</instl>
+                <instl date="20160909" type="date">2912</instl>
+                <instl date="20161009" type="date">2912</instl>
+                <instl date="20161109" type="date">2912</instl>
+                <instl date="20161209" type="date">2912</instl>
+                <instl date="20170109" type="date">2912</instl>
+                <instl date="20170209" type="date">2912</instl>
+                <instl date="20170309" type="date">2912</instl>
+                <instl date="20170409" type="date">2912</instl>
+                <instl date="20170509" type="date">2912</instl>
+                <instl date="20170609" type="date">2912</instl>
+                <instl date="20170709" type="date">2912</instl>
+                <instl date="20170809" type="date">2912</instl>
+                <instl date="20170909" type="date">2912</instl>
+                <instl date="20171009" type="date">2912</instl>
+                <instl date="20171109" type="date">2912</instl>
+                <instl date="20171209" type="date">2912</instl>
+                <instl date="20180109" type="date">2912</instl>
+                <instl date="20180209" type="date">2912</instl>
+                <instl date="20180309" type="date">2912</instl>
+                <instl date="20180409" type="fee">6291</instl>
+            </instl_list>
+        </instl_plan>
+    </hire_purchase>
+</data>

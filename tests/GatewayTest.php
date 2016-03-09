@@ -102,6 +102,31 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
+    public function testAuthorizeCorrectedAddress()
+    {
+        $this->setMockHttpResponse('Preauthorize.CorrectedAddress.txt');
+
+        /** @var AuthorizeResponse $response */
+        $response = $this->gateway->authorize($this->options)
+            ->setCustomerDetails($this->customer)
+            ->setItems($this->items)
+            ->setCard($this->card)
+            ->setPaymentMethod(AuthorizeRequest::PAYMENT_TYPE_INVOICE)
+            ->send();
+
+        self::assertTrue($response->hasCorrectedAddress());
+        self::assertEquals(
+            [
+                'street' => 'Teststrasse 8549403905',
+                'streetNo' => '123',
+                'zip' => '12345',
+                'city' => 'Teststadt 8549403905',
+                'country' => 'DEU'
+            ],
+            $response->getCorrectedAddress()
+        );
+    }
+
     public function testAuthorizeEmptyResponse()
     {
         $this->setMockHttpResponse('Empty.txt');
@@ -135,6 +160,191 @@ class GatewayTest extends GatewayTestCase
         self::assertNull($response->getCorrectedAddress());
     }
 
+    public function testAuthorizeInvoiceBankAccount()
+    {
+        $this->setMockHttpResponse('Preauthorize.InvoiceBankAccount.txt');
+
+        /** @var AuthorizeResponse $response */
+        $response = $this->gateway->authorize($this->options)
+            ->setCustomerDetails($this->customer)
+            ->setItems($this->items)
+            ->setCard($this->card)
+            ->setPaymentMethod(AuthorizeRequest::PAYMENT_TYPE_INVOICE)
+            ->send();
+
+        self::assertTrue($response->hasInvoiceBankAccount());
+        self::assertEquals(
+            [
+                'account_holder' => 'BillPay GmbH',
+                'account_number' => 'DE07312312312312312',
+                'bank_code' => 'BELADEBEXXX',
+                'bank_name' => 'Sparkasse Berlin',
+                'invoice_reference' => 'BP555666777/9999',
+            ],
+            $response->getInvoiceBankAccount()
+        );
+    }
+
+    public function testAuthorizePaymentPlan()
+    {
+        $this->setMockHttpResponse('Preauthorize.PaymentPlan.txt');
+
+        /** @var AuthorizeResponse $response */
+        $response = $this->gateway->authorize($this->options)
+            ->setCustomerDetails($this->customer)
+            ->setItems($this->items)
+            ->setCard($this->card)
+            ->setPaymentMethod(AuthorizeRequest::PAYMENT_TYPE_INVOICE)
+            ->send();
+
+        self::assertTrue($response->hasPaymentPlan());
+        self::assertEquals(
+            [
+                'num_inst' => '24',
+                'duration' => '25',
+                'fee_percent' => '18.00',
+                'fee_total' => '125.82',
+                'pre_payment' => '0.00',
+                'total_amount' => '863.82',
+                'eff_anual' => '0.18',
+                'nominal' => '0.17',
+                'instl' => [
+                    [
+                        'date' => '2016-03-09',
+                        'type' => 'immediate',
+                        'amount' => '101.91',
+                    ],
+                    [
+                        'date' => '2016-04-09',
+                        'type' => 'first',
+                        'amount' => '29.24',
+                    ],
+                    [
+                        'date' => '2016-05-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2016-06-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2016-07-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2016-08-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2016-09-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2016-10-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2016-11-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2016-12-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-01-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-02-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-03-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-04-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-05-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-06-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-07-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-08-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-09-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-10-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-11-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2017-12-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2018-01-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2018-02-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2018-03-09',
+                        'type' => 'date',
+                        'amount' => '29.12',
+                    ],
+                    [
+                        'date' => '2018-04-09',
+                        'type' => 'fee',
+                        'amount' => '62.91',
+                    ],
+                ],
+            ],
+            $response->getPaymentPlan()
+        );
+    }
+
     public function testAuthorizeSuccess()
     {
         $this->setMockHttpResponse('Preauthorize.txt');
@@ -152,17 +362,14 @@ class GatewayTest extends GatewayTestCase
         self::assertNull($response->getMessage());
         self::assertNull($response->getCode());
 
-        self::assertTrue($response->hasCorrectedAddress());
-        self::assertEquals(
-            [
-                'street' => 'Teststrasse 8549403905',
-                'streetNo' => '123',
-                'zip' => '12345',
-                'city' => 'Teststadt 8549403905',
-                'country' => 'DEU'
-            ],
-            $response->getCorrectedAddress()
-        );
+        self::assertEquals('APPROVED', $response->getStatus());
+
+        self::assertFalse($response->hasCorrectedAddress());
+        self::assertNull($response->getCorrectedAddress());
+        self::assertFalse($response->hasInvoiceBankAccount());
+        self::assertNull($response->getInvoiceBankAccount());
+        self::assertFalse($response->hasPaymentPlan());
+        self::assertNull($response->getPaymentPlan());
     }
 
     public function testCaptureFailure()
@@ -197,22 +404,43 @@ class GatewayTest extends GatewayTestCase
         );
     }
 
-    public function testRefundSuccess()
-    {
-        $this->setMockHttpResponse('Cancel.txt');
-
-        $response = $this->gateway->refund($this->options)->send();
-
-        self::assertTrue($response->isSuccessful());
-        self::assertNull($response->getMessage());
-    }
-
-
     public function testInvoiceCreatedSuccess()
     {
         $this->setMockHttpResponse('InvoiceCreated.txt');
 
         $response = $this->gateway->invoiceCreated($this->options)->send();
+
+        self::assertTrue($response->isSuccessful());
+        self::assertNull($response->getMessage());
+    }
+
+    public function testRawData()
+    {
+        $this->setMockHttpResponse('Preauthorize.txt');
+
+        $request = $this->gateway->authorize($this->options);
+        $request->setCustomerDetails($this->customer);
+        $request->setItems($this->items);
+        $request->setCard($this->card);
+        $request->setPaymentMethod(AuthorizeRequest::PAYMENT_TYPE_INVOICE);
+
+        $request->send();
+
+        $rawRequest = $request->getRawLastHttpRequest();
+        $rawResponse = $request->getRawLastHttpResponse();
+
+        self::assertContains('Host: api.billpay.de', $rawRequest);
+        self::assertContains('mid="4441" pid="6021" bpsecure="550e1bafe077ff0b0b67f4e32f29d751"', $rawRequest);
+        self::assertContains('<?xml version="1.0" encoding="UTF-8" standalone="no"?>', $rawResponse);
+        self::assertContains('Content-Type: application/xml; charset=utf-8', $rawResponse);
+        self::assertContains('bptid="1aa2fb2d-2b78-4393-bf06-be0012dda337"', $rawResponse);
+    }
+
+    public function testRefundSuccess()
+    {
+        $this->setMockHttpResponse('Cancel.txt');
+
+        $response = $this->gateway->refund($this->options)->send();
 
         self::assertTrue($response->isSuccessful());
         self::assertNull($response->getMessage());

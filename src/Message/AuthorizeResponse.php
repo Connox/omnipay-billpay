@@ -5,6 +5,7 @@ namespace Omnipay\BillPay\Message;
 use Omnipay\BillPay\Message\ResponseData\BaseDataTrait;
 use Omnipay\BillPay\Message\ResponseData\CorrectedAddressTrait;
 use Omnipay\BillPay\Message\ResponseData\InvoiceBankAccountTrait;
+use Omnipay\BillPay\Message\ResponseData\PaymentPlanTrait;
 use Omnipay\Common\Message\AbstractResponse;
 
 /**
@@ -28,4 +29,5 @@ class AuthorizeResponse extends AbstractResponse
     use BaseDataTrait;
     use CorrectedAddressTrait;
     use InvoiceBankAccountTrait;
+    use PaymentPlanTrait;
 }

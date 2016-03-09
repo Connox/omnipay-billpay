@@ -1,7 +1,7 @@
 HTTP/1.1 200 OK
 Date: Fri, 28 Jan 2016 15:24:21 GMT
 Server: Apache
-Content-Length: 212
+Content-Length: 431
 Connection: close
 Content-Type: application/xml; charset=utf-8
 
@@ -11,4 +11,10 @@ Content-Type: application/xml; charset=utf-8
       error_code="0"
       merchant_message=""
       status="APPROVED">
+
+    <corrected_address city="Teststadt 8549403905"
+                       country="DEU"
+                       street="Teststrasse 8549403905"
+                       streetNo="123"
+                       zip="12345"/>
 </data>
