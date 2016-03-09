@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <data api_version="1.5.10">
-    <default_params mid="" pid="" bpsecure=""/>
+    <default_params mid="" pid="" bpsecure="d41d8cd98f00b204e9800998ecf8427e"/>
     <invoice_params carttotalgross="2395" currency="EUR" reference="ORDER-12345678" delayindays="2"/>
 </data>

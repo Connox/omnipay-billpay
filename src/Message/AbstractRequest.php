@@ -173,7 +173,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['api_version'] = self::API_VERSION;
         $data[0]->default_params['mid'] = $this->getMerchantId();
         $data[0]->default_params['pid'] = $this->getPortalId();
-        $data[0]->default_params['bpsecure'] = $this->getSecurityKey();
+        $data[0]->default_params['bpsecure'] = md5($this->getSecurityKey());
 
         return $data;
     }
