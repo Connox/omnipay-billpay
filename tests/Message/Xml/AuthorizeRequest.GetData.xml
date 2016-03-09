@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data api_version="1.5.10" tcaccepted="1" expecteddaystillshipping="2" capturerequestnecessary="0" paymenttype="4">
-    <default_parms mid="" pid="" bpsecure=""/>
+    <default_params mid="" pid="" bpsecure=""/>
     <customer_details customerid="" customertype="n" salutation="" title="" firstName="" lastName="" street=""
                       streetNo="" addressAddition="" zip="" city="" country="" email="" phone="" cellPhone=""
                       birthday="" language="" ip="" customerGroup="p"/>

@@ -34,11 +34,11 @@ trait InvoiceTrait
     /**
      * Gets amount of days that will be added to the payment due date (e.g. in case of delayed shipping).
      *
-     * @return int|null Days
+     * @return int Days
      */
     public function getDelayInDays()
     {
-        return $this->getParameter('delayInDays');
+        return $this->getParameter('delayInDays') ? : 5;
     }
 
     /**
@@ -75,7 +75,7 @@ trait InvoiceTrait
         $data->invoice_params[0]['carttotalgross'] = round(bcmul($this->getAmount(), 100, 8));
         $data->invoice_params[0]['currency'] = $this->getCurrency();
         $data->invoice_params[0]['reference'] = $this->getTransactionId();
-        $data->invoice_params[0]['delayindays'] = $this->getDelayInDays() ? : 5;
+        $data->invoice_params[0]['delayindays'] = $this->getDelayInDays();
     }
 
     /**
