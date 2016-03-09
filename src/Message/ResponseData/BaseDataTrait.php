@@ -7,18 +7,12 @@ use SimpleXMLElement;
 /**
  * Access base data in the response, internal usage only
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
  */
 trait BaseDataTrait
 {
-    /**
-     * @return SimpleXMLElement
-     */
-    abstract public function getData();
-
     /**
      * Response code
      *
@@ -30,6 +24,11 @@ trait BaseDataTrait
 
         return (string)$data['error_code'] ? : null;
     }
+
+    /**
+     * @return SimpleXMLElement
+     */
+    abstract public function getData();
 
     /**
      * Response Message

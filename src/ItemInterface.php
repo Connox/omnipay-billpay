@@ -4,8 +4,6 @@ namespace Omnipay\BillPay;
 
 /**
  * Cart Item interface BillPay extension
- *
- * @package Omnipay\BillPay
  */
 interface ItemInterface extends \Omnipay\Common\ItemInterface
 {

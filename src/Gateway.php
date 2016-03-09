@@ -11,7 +11,6 @@ use Omnipay\Common\AbstractGateway;
 /**
  * Class Gateway
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT

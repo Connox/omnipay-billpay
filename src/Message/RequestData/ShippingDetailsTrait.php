@@ -9,7 +9,6 @@ use SimpleXMLElement;
 /**
  * Class ShippingDetailsTrait
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT

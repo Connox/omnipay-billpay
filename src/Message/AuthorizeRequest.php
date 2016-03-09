@@ -17,7 +17,7 @@ use SimpleXMLElement;
  * Message AuthorizeRequest
  *
  * @link      https://techdocs.billpay.de/en/For_developers/XML_API/Preauthorize.html
- * @package   Omnipay\BillPay
+ *
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -42,8 +42,9 @@ class AuthorizeRequest extends AbstractRequest
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.
      *
-     * @return SimpleXMLElement
      * @throws InvalidRequestException
+     *
+     * @return SimpleXMLElement
      */
     public function getData()
     {
@@ -65,8 +66,10 @@ class AuthorizeRequest extends AbstractRequest
      *
      * @param string $value
      *
-     * @return AbstractRequest Provides a fluent interface
      * @throws InvalidRequestException
+     *
+     * @return AbstractRequest Provides a fluent interface
+     *
      * @see AuthorizeRequest::PAYMENT_TYPE_*
      */
     public function setPaymentMethod($value)

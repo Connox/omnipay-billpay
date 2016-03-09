@@ -10,7 +10,6 @@ use SimpleXMLElement;
 /**
  * Appends items data
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -42,7 +41,7 @@ trait ArticleDataTrait
                 throw new InvalidRequestException('All items must be of instance of ' . Item::class);
             }
 
-            /** @noinspection DisconnectedForeachInstructionInspection */
+            /* @noinspection DisconnectedForeachInstructionInspection */
             $data->article_data[0]->addChild('article');
             $data->article_data[0]->article[$pos]['articleid'] = $item->getId();
             $data->article_data[0]->article[$pos]['articlequantity'] = $item->getQuantity();

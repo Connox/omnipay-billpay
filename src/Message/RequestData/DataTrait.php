@@ -10,7 +10,6 @@ use SimpleXMLElement;
 /**
  * Class DataTrait
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -22,7 +21,7 @@ trait DataTrait
         AuthorizeRequest::PAYMENT_TYPE_DIRECT_DEBIT => 2,
         AuthorizeRequest::PAYMENT_TYPE_TRANSACTION_CREDIT => 3,
         AuthorizeRequest::PAYMENT_TYPE_PAY_LATER => 4,
-        AuthorizeRequest::PAYMENT_TYPE_COLLATERAL_PROMISE => 7
+        AuthorizeRequest::PAYMENT_TYPE_COLLATERAL_PROMISE => 7,
     ];
 
     /**

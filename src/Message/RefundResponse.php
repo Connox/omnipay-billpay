@@ -15,7 +15,6 @@ use Omnipay\Common\Message\AbstractResponse;
  * </data>
  * </code>
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT

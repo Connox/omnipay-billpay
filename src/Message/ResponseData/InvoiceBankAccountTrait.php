@@ -7,7 +7,6 @@ use SimpleXMLElement;
 /**
  * Access invoice bank account in the response
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -35,7 +34,7 @@ trait InvoiceBankAccountTrait
             'account_number' => (string)$this->getData()->invoice_bank_account['account_number'],
             'bank_code' => (string)$this->getData()->invoice_bank_account['bank_code'],
             'bank_name' => (string)$this->getData()->invoice_bank_account['bank_name'],
-            'invoice_reference' => (string)$this->getData()->invoice_bank_account['invoice_reference']
+            'invoice_reference' => (string)$this->getData()->invoice_bank_account['invoice_reference'],
         ];
     }
 

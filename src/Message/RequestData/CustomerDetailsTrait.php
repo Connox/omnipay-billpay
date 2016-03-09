@@ -12,7 +12,6 @@ use SimpleXMLElement;
 /**
  * Class CustomerDetailsTrait
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -41,8 +40,9 @@ trait CustomerDetailsTrait
     abstract public function getCountryCode($country);
 
     /**
-     * @return null|Customer
      * @throws InvalidRequestException
+     *
+     * @return null|Customer
      */
     public function getCustomerDetails()
     {

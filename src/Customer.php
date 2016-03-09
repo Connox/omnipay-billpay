@@ -90,7 +90,7 @@ class Customer
      */
     public function initialize($parameters = null)
     {
-        $this->parameters = new ParameterBag;
+        $this->parameters = new ParameterBag();
         $this->setType(self::TYPE_NEW);
         $this->setGroup(self::GROUP_PRIVATE);
 

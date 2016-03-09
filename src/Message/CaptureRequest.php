@@ -9,7 +9,7 @@ use SimpleXMLElement;
  * Message CaptureRequest
  *
  * @link      https://techdocs.billpay.de/en/For_developers/XML_API/Capture.html
- * @package   Omnipay\BillPay
+ *
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT

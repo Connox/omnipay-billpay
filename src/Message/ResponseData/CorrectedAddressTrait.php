@@ -7,7 +7,6 @@ use SimpleXMLElement;
 /**
  * Access corrected address in the response, internal usage only
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -30,7 +29,7 @@ trait CorrectedAddressTrait
             'streetNo' => (string)$this->getData()->corrected_address['streetNo'],
             'zip' => (string)$this->getData()->corrected_address['zip'],
             'city' => (string)$this->getData()->corrected_address['city'],
-            'country' => (string)$this->getData()->corrected_address['country']
+            'country' => (string)$this->getData()->corrected_address['country'],
         ];
     }
 

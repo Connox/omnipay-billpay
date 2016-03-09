@@ -12,7 +12,6 @@ use SimpleXMLElement;
 /**
  * Class TotalTrait
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -189,8 +188,9 @@ trait TotalTrait
     }
 
     /**
-     * @return array
      * @throws InvalidRequestException
+     *
+     * @return array
      */
     protected function calculateTotalAmounts()
     {
@@ -202,7 +202,7 @@ trait TotalTrait
         $totalGross = 0.0;
 
         foreach ($this->getItems()->all() as $pos => $item) {
-            /** @var Item $item */
+            /* @var Item $item */
             $totalNet = bcadd($totalNet, bcmul($item->getPriceNet(), $item->getQuantity(), 8), 8);
             $totalGross = bcadd($totalGross, bcmul($item->getPrice(), $item->getQuantity(), 8), 8);
         }

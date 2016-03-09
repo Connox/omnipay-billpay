@@ -17,7 +17,7 @@ use SimpleXMLElement;
  * </code>
  *
  * @link      https://techdocs.billpay.de/de/An_Entwickler/XML_API/Cancel.html
- * @package   Omnipay\BillPay
+ *
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT

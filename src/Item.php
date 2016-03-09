@@ -5,7 +5,6 @@ namespace Omnipay\BillPay;
 /**
  * Class Item
  *
- * @package   Omnipay\BillPay
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
