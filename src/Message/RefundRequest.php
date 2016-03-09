@@ -2,6 +2,7 @@
 
 namespace Omnipay\BillPay\Message;
 
+use Omnipay\BillPay\Message\RequestData\CancelTrait;
 use Omnipay\Common\Message\ResponseInterface;
 use SimpleXMLElement;
 
@@ -24,6 +25,8 @@ use SimpleXMLElement;
  */
 class RefundRequest extends AbstractRequest
 {
+    use CancelTrait;
+
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.
@@ -32,7 +35,11 @@ class RefundRequest extends AbstractRequest
      */
     public function getData()
     {
-        return $this->getBaseData();
+        $data = $this->getBaseData();
+
+        $this->appendCancel($data);
+
+        return $data;
     }
 
     /**
