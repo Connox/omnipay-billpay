@@ -10,7 +10,7 @@ use SimpleXMLElement;
  * BillPay Abstract Request
  *
  * @link      https://techdocs.billpay.de/en/For_developers/Introduction.html
- * @package   Omnipay\BillPay
+ *
  * @author    Andreas Lange <andreas.lange@quillo.de>
  * @copyright 2016, Quillo GmbH
  * @license   MIT
@@ -21,6 +21,43 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     protected $liveEndpoint = 'https://api.billpay.de/xml';
     protected $testEndpoint = 'https://test-api.billpay.de/xml/offline';
+
+    /**
+     * @var string
+     */
+    protected $rawLastHttpRequest;
+
+    /**
+     * @var string
+     */
+    protected $rawLastHttpResponse;
+
+    /**
+     * @param string $country
+     *
+     * @return string|null ISO-3166-1 Alpha3
+     */
+    public function getCountryCode($country)
+    {
+        $countries = [
+            'germany' => 'DEU',
+            'deu' => 'DEU',
+            'de' => 'DEU',
+            'austria' => 'AUT',
+            'aut' => 'AUT',
+            'at' => 'AUT',
+            'switzerland' => 'CHE',
+            'swiss' => 'CHE',
+            'che' => 'CHE',
+            'ch' => 'CHE',
+            'netherlands' => 'NLD',
+            'the netherlands' => 'NLD',
+            'nld' => 'NLD',
+            'nl' => 'NLD',
+        ];
+
+        return array_key_exists(strtolower($country), $countries) ? $countries[strtolower($country)] : null;
+    }
 
     /**
      * @return int Merchant ID
@@ -39,6 +76,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * Gets the raw http request of the last request including header lines.
+     *
+     * @return string
+     */
+    public function getRawLastHttpRequest()
+    {
+        return $this->rawLastHttpRequest;
+    }
+
+    /**
+     * Gets the raw http response of the last request including header lines.
+     *
+     * @return string
+     */
+    public function getRawLastHttpResponse()
+    {
+        return $this->rawLastHttpResponse;
+    }
+
+    /**
      * @return string MD5 hash of the security key generated for this portal. (generated and delivered by BillPay)
      */
     public function getSecurityKey()
@@ -49,10 +106,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * Send the request with specified data
      *
-     * @param  SimpleXMLElement $data The data to send
+     * @param SimpleXMLElement $data The data to send
+     *
+     * @throws InvalidRequestException
      *
      * @return ResponseInterface
-     * @throws InvalidRequestException
      */
     public function sendData($data)
     {
@@ -60,7 +118,11 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             throw new InvalidRequestException('Data must be XML.');
         }
 
-        $httpResponse = $this->httpClient->post($this->getEndpoint(), null, (string)$data->asXML())->send();
+        $httpRequest = $this->httpClient->post($this->getEndpoint(), null, (string)$data->asXML());
+        $this->rawLastHttpRequest = (string)$httpRequest;
+
+        $httpResponse = $httpRequest->send();
+        $this->rawLastHttpResponse = $httpResponse->getMessage();
 
         return $this->createResponse($httpResponse->xml());
     }
@@ -114,33 +176,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data[0]->default_params['bpsecure'] = $this->getSecurityKey();
 
         return $data;
-    }
-
-    /**
-     * @param string $country
-     *
-     * @return string|null ISO-3166-1 Alpha3
-     */
-    public function getCountryCode($country)
-    {
-        $countries = [
-            'germany' => 'DEU',
-            'deu' => 'DEU',
-            'de' => 'DEU',
-            'austria' => 'AUT',
-            'aut' => 'AUT',
-            'at' => 'AUT',
-            'switzerland' => 'CHE',
-            'swiss' => 'CHE',
-            'che' => 'CHE',
-            'ch' => 'CHE',
-            'netherlands' => 'NLD',
-            'the netherlands' => 'NLD',
-            'nld' => 'NLD',
-            'nl' => 'NLD'
-        ];
-
-        return array_key_exists(strtolower($country), $countries) ? $countries[strtolower($country)] : null;
     }
 
     /**
