@@ -116,10 +116,7 @@ class AuthorizeRequestTest extends TestCase
 
     public function testCustomerNotExist()
     {
-        self::setExpectedException(
-            InvalidRequestException::class,
-            'Customer object required for additional details not covered by card.'
-        );
+        self::setExpectedException(InvalidRequestException::class, 'Customer object required.');
         $this->request->setCustomerDetails(null);
         $this->request->getData();
     }
@@ -174,7 +171,7 @@ class AuthorizeRequestTest extends TestCase
 
     public function testItemsNotExist()
     {
-        self::setExpectedException(InvalidRequestException::class, 'This request requires items.');
+        self::setExpectedException(InvalidRequestException::class, 'Item objects are required.');
         $this->request->setItems(null);
         $this->request->getData();
     }

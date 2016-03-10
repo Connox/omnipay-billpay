@@ -32,8 +32,7 @@ trait PaymentPlanTrait
             return null;
         }
 
-        $data = $this->getData();
-        $plan = $data->hire_purchase[0]->instl_plan[0];
+        $plan = $this->getData()->hire_purchase[0]->instl_plan[0];
 
         $return = [
             'num_inst' => (string)$plan['num_inst'],
@@ -44,15 +43,8 @@ trait PaymentPlanTrait
             'total_amount' => bcdiv((string)$plan->calc[0]->total_amount, 100, 2),
             'eff_anual' => bcdiv((string)$plan->calc[0]->eff_anual, 100, 2),
             'nominal' => bcdiv((string)$plan->calc[0]->nominal, 100, 2),
+            'instl' => $this->getPaymentPlanInstallments()
         ];
-
-        foreach ($plan->instl_list[0]->instl as $installment) {
-            $return['instl'][] = [
-                'date' => DateTime::createFromFormat('Ymd', (string)$installment['date'])->format('Y-m-d'),
-                'type' => (string)$installment['type'],
-                'amount' => bcdiv((string)$installment, 100, 2),
-            ];
-        }
 
         return $return;
     }
@@ -67,5 +59,25 @@ trait PaymentPlanTrait
         $data = $this->getData();
 
         return isset($data->hire_purchase) && isset($data->hire_purchase[0]->instl_plan);
+    }
+
+    /**
+     * Return an array with all installments
+     *
+     * @return array
+     */
+    private function getPaymentPlanInstallments()
+    {
+        $installments = [];
+
+        foreach ($this->getData()->hire_purchase[0]->instl_plan[0]->instl_list[0]->instl as $installment) {
+            $installments[] = [
+                'date' => DateTime::createFromFormat('Ymd', (string)$installment['date'])->format('Y-m-d'),
+                'type' => (string)$installment['type'],
+                'amount' => bcdiv((string)$installment, 100, 2),
+            ];
+        }
+
+        return $installments;
     }
 }

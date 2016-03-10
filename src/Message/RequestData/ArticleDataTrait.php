@@ -32,8 +32,6 @@ trait ArticleDataTrait
      */
     protected function appendArticleData(SimpleXMLElement $data)
     {
-        $this->failWithoutItems();
-
         $data->addChild('article_data');
 
         foreach ($this->getItems()->all() as $pos => $item) {
@@ -51,13 +49,4 @@ trait ArticleDataTrait
             $data->article_data[0]->article[$pos]['articlepricegross'] = bcmul($item->getPrice(), 100, 0);
         }
     }
-
-    /**
-     * Checks if a item objects exists and throws exception otherwise.
-     *
-     * @throws InvalidRequestException
-     *
-     * @codeCoverageIgnore
-     */
-    abstract protected function failWithoutItems();
 }

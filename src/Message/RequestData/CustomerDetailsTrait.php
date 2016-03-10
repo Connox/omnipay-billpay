@@ -77,12 +77,6 @@ trait CustomerDetailsTrait
         $card = $this->getCard();
         $customer = $this->getCustomerDetails();
 
-        $this->failIfCardNotExists();
-
-        if ($customer === null) {
-            throw new InvalidRequestException('Customer object required for additional details not covered by card.');
-        }
-
         $data->addChild('customer_details');
         $data->customer_details[0]['customerid'] = $customer->getId();
         $data->customer_details[0]['customertype'] = $customer->getType();
@@ -104,15 +98,6 @@ trait CustomerDetailsTrait
         $data->customer_details[0]['ip'] = $this->getClientIp();
         $data->customer_details[0]['customerGroup'] = $customer->getGroup();
     }
-
-    /**
-     * Checks if a card object exists and throws exception otherwise.
-     *
-     * @throws InvalidRequestException
-     *
-     * @codeCoverageIgnore
-     */
-    abstract protected function failIfCardNotExists();
 
     /**
      * Get a single parameter.

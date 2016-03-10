@@ -48,6 +48,8 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getData()
     {
+        $this->validateData();
+
         $data = $this->getBaseData();
 
         $this->appendData($data);
@@ -92,34 +94,25 @@ class AuthorizeRequest extends AbstractRequest
     }
 
     /**
-     * Checks if a card object exists and throws exception otherwise.
-     *
-     * @throws InvalidRequestException
-     */
-    protected function failIfCardNotExists()
-    {
-        if ($this->getCard() === null) {
-            throw new InvalidRequestException('Credit card object required.');
-        }
-    }
-
-    /**
-     * Checks if a item objects exists and throws exception otherwise.
-     *
-     * @throws InvalidRequestException
-     */
-    protected function failWithoutItems()
-    {
-        if ($this->getItems() === null || $this->getItems()->count() === 0) {
-            throw new InvalidRequestException('This request requires items.');
-        }
-    }
-
-    /**
      * @return string
      */
     protected function getEndpoint()
     {
         return parent::getEndpoint() . '/preauthorize';
+    }
+
+    private function validateData()
+    {
+        if ($this->getCard() === null) {
+            throw new InvalidRequestException('Credit card object required.');
+        }
+
+        if ($this->getItems() === null || $this->getItems()->count() === 0) {
+            throw new InvalidRequestException('Item objects are required.');
+        }
+
+        if ($this->getCustomerDetails() === null) {
+            throw new InvalidRequestException('Customer object required.');
+        }
     }
 }

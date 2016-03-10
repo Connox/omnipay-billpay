@@ -202,8 +202,6 @@ trait TotalTrait
      */
     protected function calculateTotalAmounts()
     {
-        $this->failWithoutItems();
-
         $totalNet = 0.0;
         $totalGross = 0.0;
 
@@ -223,15 +221,6 @@ trait TotalTrait
 
         return [$totalNet, $totalGross];
     }
-
-    /**
-     * Checks if a item objects exists and throws exception otherwise.
-     *
-     * @throws InvalidRequestException
-     *
-     * @codeCoverageIgnore
-     */
-    abstract protected function failWithoutItems();
 
     /**
      * Get a single parameter.
