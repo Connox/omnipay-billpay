@@ -92,6 +92,30 @@ class AuthorizeRequest extends AbstractRequest
     }
 
     /**
+     * Checks if a card object exists and throws exception otherwise.
+     *
+     * @throws InvalidRequestException
+     */
+    protected function failIfCardNotExists()
+    {
+        if ($this->getCard() === null) {
+            throw new InvalidRequestException('Credit card object required.');
+        }
+    }
+
+    /**
+     * Checks if a item objects exists and throws exception otherwise.
+     *
+     * @throws InvalidRequestException
+     */
+    protected function failWithoutItems()
+    {
+        if ($this->getItems() === null || $this->getItems()->count() === 0) {
+            throw new InvalidRequestException('This request requires items.');
+        }
+    }
+
+    /**
      * @return string
      */
     protected function getEndpoint()

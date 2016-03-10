@@ -22,6 +22,8 @@ trait CustomerDetailsTrait
      * Get the card.
      *
      * @return CreditCard
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getCard();
 
@@ -29,6 +31,8 @@ trait CustomerDetailsTrait
      * Get the client IP address.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getClientIp();
 
@@ -36,6 +40,8 @@ trait CustomerDetailsTrait
      * @param string $country
      *
      * @return string|null ISO-3166-1 Alpha3
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getCountryCode($country);
 
@@ -71,9 +77,7 @@ trait CustomerDetailsTrait
         $card = $this->getCard();
         $customer = $this->getCustomerDetails();
 
-        if ($card === null) {
-            throw new InvalidRequestException('Credit card and customer object required for address details.');
-        }
+        $this->failIfCardNotExists();
 
         if ($customer === null) {
             throw new InvalidRequestException('Customer object required for additional details not covered by card.');
@@ -102,11 +106,22 @@ trait CustomerDetailsTrait
     }
 
     /**
+     * Checks if a card object exists and throws exception otherwise.
+     *
+     * @throws InvalidRequestException
+     *
+     * @codeCoverageIgnore
+     */
+    abstract protected function failIfCardNotExists();
+
+    /**
      * Get a single parameter.
      *
      * @param string $key The parameter key
      *
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     abstract protected function getParameter($key);
 
@@ -117,6 +132,8 @@ trait CustomerDetailsTrait
      * @param mixed  $value The value to set
      *
      * @return AbstractRequest Provides a fluent interface
+     *
+     * @codeCoverageIgnore
      */
     abstract protected function setParameter($key, $value);
 }

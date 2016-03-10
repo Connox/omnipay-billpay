@@ -108,7 +108,7 @@ class AuthorizeRequestTest extends TestCase
     {
         self::setExpectedException(
             InvalidRequestException::class,
-            'Credit card and customer object required for address details.'
+            'Credit card object required.'
         );
         $this->request->setCard(null);
         $this->request->getData();

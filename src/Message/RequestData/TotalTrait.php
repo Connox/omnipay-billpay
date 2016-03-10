@@ -22,6 +22,8 @@ trait TotalTrait
      * Validates and returns the formated amount.
      *
      * @return string The amount formatted to the correct number of decimal places for the selected currency.
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getAmount();
 
@@ -29,6 +31,8 @@ trait TotalTrait
      * Get the payment currency code.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getCurrency();
 
@@ -36,6 +40,8 @@ trait TotalTrait
      * A list of items in this order
      *
      * @return ItemBag|null A bag containing items in this order
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getItems();
 
@@ -93,6 +99,8 @@ trait TotalTrait
      * Get the transaction ID.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getTransactionId();
 
@@ -194,9 +202,7 @@ trait TotalTrait
      */
     protected function calculateTotalAmounts()
     {
-        if ($this->getItems() === null || $this->getItems()->count() === 0) {
-            throw new InvalidRequestException('This request requires items.');
-        }
+        $this->failWithoutItems();
 
         $totalNet = 0.0;
         $totalGross = 0.0;
@@ -219,11 +225,22 @@ trait TotalTrait
     }
 
     /**
+     * Checks if a item objects exists and throws exception otherwise.
+     *
+     * @throws InvalidRequestException
+     *
+     * @codeCoverageIgnore
+     */
+    abstract protected function failWithoutItems();
+
+    /**
      * Get a single parameter.
      *
      * @param string $key The parameter key
      *
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     abstract protected function getParameter($key);
 
@@ -234,6 +251,8 @@ trait TotalTrait
      * @param mixed  $value The value to set
      *
      * @return AbstractRequest Provides a fluent interface
+     *
+     * @codeCoverageIgnore
      */
     abstract protected function setParameter($key, $value);
 }

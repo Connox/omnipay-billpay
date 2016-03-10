@@ -16,6 +16,8 @@ trait PaymentPlanTrait
 {
     /**
      * @return SimpleXMLElement
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getData();
 

@@ -20,6 +20,8 @@ trait BankAccountTrait
      * Get the payment issuer.
      *
      * @return string
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getPaymentMethod();
 
@@ -114,6 +116,8 @@ trait BankAccountTrait
      * @param string $key The parameter key
      *
      * @return mixed
+     *
+     * @codeCoverageIgnore
      */
     abstract protected function getParameter($key);
 
@@ -124,6 +128,8 @@ trait BankAccountTrait
      * @param mixed  $value The value to set
      *
      * @return AbstractRequest Provides a fluent interface
+     *
+     * @codeCoverageIgnore
      */
     abstract protected function setParameter($key, $value);
 }

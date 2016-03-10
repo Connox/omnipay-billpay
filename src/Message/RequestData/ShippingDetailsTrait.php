@@ -19,6 +19,8 @@ trait ShippingDetailsTrait
      * Get the card.
      *
      * @return CreditCard
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getCard();
 
@@ -26,6 +28,8 @@ trait ShippingDetailsTrait
      * @param string $country
      *
      * @return string|null ISO-3166-1 Alpha3
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getCountryCode($country);
 
@@ -36,14 +40,9 @@ trait ShippingDetailsTrait
      */
     protected function appendShippingDetails(SimpleXMLElement $data)
     {
-        $card = $this->getCard();
-
-        if ($card === null) {
-            throw new InvalidRequestException('Credit card and customer object required for address details.');
-        }
+        $this->failIfCardNotExists();
 
         $data->addChild('shipping_details');
-
         $data->shipping_details[0]['useBillingAddress'] = 1;
         $data->shipping_details[0]['salutation'] = null;
         $data->shipping_details[0]['title'] = null;
@@ -59,6 +58,7 @@ trait ShippingDetailsTrait
         $data->shipping_details[0]['cellPhone'] = null;
 
         if (!$this->hasSharedAddress()) {
+            $card = $this->getCard();
             $data->shipping_details[0]['useBillingAddress'] = 0;
             $data->shipping_details[0]['salutation'] = $card->getGender();
             $data->shipping_details[0]['title'] = $card->getShippingTitle();
@@ -72,6 +72,15 @@ trait ShippingDetailsTrait
             $data->shipping_details[0]['phone'] = $card->getShippingPhone();
         }
     }
+
+    /**
+     * Checks if a card object exists and throws exception otherwise.
+     *
+     * @throws InvalidRequestException
+     *
+     * @codeCoverageIgnore
+     */
+    abstract protected function failIfCardNotExists();
 
     /**
      * @return bool

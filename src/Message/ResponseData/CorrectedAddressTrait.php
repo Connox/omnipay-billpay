@@ -35,6 +35,8 @@ trait CorrectedAddressTrait
 
     /**
      * @return SimpleXMLElement
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getData();
 

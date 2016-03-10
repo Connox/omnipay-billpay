@@ -20,6 +20,8 @@ trait ArticleDataTrait
      * A list of items in this order
      *
      * @return ItemBag|null A bag containing items in this order
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getItems();
 
@@ -30,9 +32,7 @@ trait ArticleDataTrait
      */
     protected function appendArticleData(SimpleXMLElement $data)
     {
-        if ($this->getItems() === null || $this->getItems()->count() === 0) {
-            throw new InvalidRequestException('This request requires items.');
-        }
+        $this->failWithoutItems();
 
         $data->addChild('article_data');
 
@@ -51,4 +51,13 @@ trait ArticleDataTrait
             $data->article_data[0]->article[$pos]['articlepricegross'] = bcmul($item->getPrice(), 100, 0);
         }
     }
+
+    /**
+     * Checks if a item objects exists and throws exception otherwise.
+     *
+     * @throws InvalidRequestException
+     *
+     * @codeCoverageIgnore
+     */
+    abstract protected function failWithoutItems();
 }

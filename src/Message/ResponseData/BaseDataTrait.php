@@ -27,6 +27,8 @@ trait BaseDataTrait
 
     /**
      * @return SimpleXMLElement
+     *
+     * @codeCoverageIgnore
      */
     abstract public function getData();
 

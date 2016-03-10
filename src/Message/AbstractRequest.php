@@ -161,6 +161,8 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      * @param SimpleXMLElement $response
      *
      * @return ResponseInterface
+     *
+     * @codeCoverageIgnore
      */
     abstract protected function createResponse($response);
 
