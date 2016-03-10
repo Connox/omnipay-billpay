@@ -101,18 +101,43 @@ class AuthorizeRequest extends AbstractRequest
         return parent::getEndpoint() . '/preauthorize';
     }
 
+    /**
+     * @throws InvalidRequestException
+     */
     private function validateData()
+    {
+        $this->validateDataCard();
+        $this->validateDataItems();
+        $this->validateDataCustomerDetails();
+    }
+
+    /**
+     * @throws InvalidRequestException
+     */
+    private function validateDataCard()
     {
         if ($this->getCard() === null) {
             throw new InvalidRequestException('Credit card object required.');
         }
+    }
 
-        if ($this->getItems() === null || $this->getItems()->count() === 0) {
-            throw new InvalidRequestException('Item objects are required.');
-        }
-
+    /**
+     * @throws InvalidRequestException
+     */
+    private function validateDataCustomerDetails()
+    {
         if ($this->getCustomerDetails() === null) {
             throw new InvalidRequestException('Customer object required.');
+        }
+    }
+
+    /**
+     * @throws InvalidRequestException
+     */
+    private function validateDataItems()
+    {
+        if ($this->getItems() === null || $this->getItems()->count() === 0) {
+            throw new InvalidRequestException('Item objects are required.');
         }
     }
 }

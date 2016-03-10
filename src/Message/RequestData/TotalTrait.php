@@ -171,17 +171,9 @@ trait TotalTrait
      */
     protected function appendTotal(SimpleXMLElement $data)
     {
-        list($totalNet, $totalGross) = $this->calculateTotalAmounts();
+        $this->checkAmountDifference();
 
-        if (bccomp($totalGross, $this->getAmount(), 8) !== 0) {
-            throw new InvalidRequestException(
-                sprintf(
-                    'Amount (%0.2f) differs from calculated amount (%0.2f) (items + shipping - rebate).',
-                    $totalGross,
-                    $this->getAmount()
-                )
-            );
-        }
+        list($totalNet, $totalGross) = $this->calculateTotalAmounts();
 
         $data->addChild('total');
         $data->total[0]['shippingname'] = $this->getShippingName();
@@ -244,4 +236,22 @@ trait TotalTrait
      * @codeCoverageIgnore
      */
     abstract protected function setParameter($key, $value);
+
+    /**
+     * @throws InvalidRequestException
+     */
+    private function checkAmountDifference()
+    {
+        $totalGross = $this->calculateTotalAmounts()[1];
+
+        if (bccomp($totalGross, $this->getAmount(), 8) !== 0) {
+            throw new InvalidRequestException(
+                sprintf(
+                    'Amount (%0.2f) differs from calculated amount (%0.2f) (items + shipping - rebate).',
+                    $totalGross,
+                    $this->getAmount()
+                )
+            );
+        }
+    }
 }
