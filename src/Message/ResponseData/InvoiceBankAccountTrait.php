@@ -2,6 +2,7 @@
 
 namespace Omnipay\BillPay\Message\ResponseData;
 
+use DateTime;
 use SimpleXMLElement;
 
 /**
@@ -31,12 +32,16 @@ trait InvoiceBankAccountTrait
             return null;
         }
 
+        $data = $this->getData();
+
         return [
-            'account_holder' => (string)$this->getData()->invoice_bank_account['account_holder'],
-            'account_number' => (string)$this->getData()->invoice_bank_account['account_number'],
-            'bank_code' => (string)$this->getData()->invoice_bank_account['bank_code'],
-            'bank_name' => (string)$this->getData()->invoice_bank_account['bank_name'],
-            'invoice_reference' => (string)$this->getData()->invoice_bank_account['invoice_reference'],
+            'account_holder' => (string)$data->invoice_bank_account['account_holder'],
+            'account_number' => (string)$data->invoice_bank_account['account_number'],
+            'bank_code' => (string)$data->invoice_bank_account['bank_code'],
+            'bank_name' => (string)$data->invoice_bank_account['bank_name'],
+            'invoice_reference' => (string)$data->invoice_bank_account['invoice_reference'],
+            'invoice_duedate' => $this->formatDate((string)$data->invoice_bank_account['invoice_duedate']),
+            'activation_performed' => (string)$data->invoice_bank_account['activation_performed'] === '1',
         ];
     }
 
@@ -50,5 +55,19 @@ trait InvoiceBankAccountTrait
         $data = $this->getData();
 
         return isset($data->invoice_bank_account) && (string)$data->invoice_bank_account['account_holder'] !== '';
+    }
+
+    /**
+     * @param string $date Date with format 'Ymd'
+     *
+     * @return null|string Y-m-d or null
+     */
+    private function formatDate($date)
+    {
+        if (!$date) {
+            return null;
+        }
+
+        return DateTime::createFromFormat('Ymd', $date)->format('Y-m-d');
     }
 }

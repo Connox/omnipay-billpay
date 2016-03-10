@@ -5,6 +5,7 @@ namespace Omnipay\BillPay;
 use Omnipay\BillPay\Message\AuthorizeRequest;
 use Omnipay\BillPay\Message\AuthorizeResponse;
 use Omnipay\BillPay\Message\CaptureResponse;
+use Omnipay\BillPay\Message\InvoiceCreatedResponse;
 use Omnipay\Common\CreditCard;
 use Omnipay\Common\ItemBag;
 use Omnipay\Tests\GatewayTestCase;
@@ -180,6 +181,8 @@ class GatewayTest extends GatewayTestCase
                 'bank_code' => 'BELADEBEXXX',
                 'bank_name' => 'Sparkasse Berlin',
                 'invoice_reference' => 'BP555666777/9999',
+                'invoice_duedate' => null,
+                'activation_performed' => false
             ],
             $response->getInvoiceBankAccount()
         );
@@ -399,6 +402,8 @@ class GatewayTest extends GatewayTestCase
                 'bank_code' => 'BELADEBEXXX',
                 'bank_name' => 'Sparkasse Berlin',
                 'invoice_reference' => 'BP555666777/9999',
+                'invoice_duedate' => null,
+                'activation_performed' => false
             ],
             $response->getInvoiceBankAccount()
         );
@@ -408,10 +413,23 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('InvoiceCreated.txt');
 
+        /** @var InvoiceCreatedResponse $response */
         $response = $this->gateway->invoiceCreated($this->options)->send();
 
         self::assertTrue($response->isSuccessful());
         self::assertNull($response->getMessage());
+        self::assertEquals(
+            [
+                'account_holder' => 'BillPay GmbH',
+                'account_number' => 'DE07312312312312312',
+                'bank_code' => 'BELADEBEXXX',
+                'bank_name' => 'Sparkasse Berlin',
+                'invoice_reference' => 'BP555666777/9999',
+                'invoice_duedate' => '2015-05-01',
+                'activation_performed' => true
+            ],
+            $response->getInvoiceBankAccount()
+        );
     }
 
     public function testRawData()
