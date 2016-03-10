@@ -1,7 +1,5 @@
 # Omnipay: BillPay
 
-> :bomb: UNDER DEVELOPMENT AND NOT USEABLE YET
-
 **BillPay driver for the Omnipay PHP payment processing library**
 
 [![License](https://poser.pugx.org/quillo/omnipay-billpay/license)](https://packagist.org/packages/quillo/omnipay-billpay)
@@ -17,7 +15,12 @@
 processing library for PHP 5.6+. This package implements BillPay support for Omnipay.
 
 
-This package is still in the early development stages and is not functioning at the moment 
+This package is still missing a lot of documentation on how to use it.
+Not all feature from BillPay are implemented yet. Currently covered are:
+
+- `Preauthorize` as `Gateway::authorize` and `Gateway::purchase`
+- `InvoiceCreated` as `Gateway::invoiceCreated`
+- `Cancel` as `Gateway::refund`
 
 ## Installation
 
@@ -27,7 +30,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "quillo/omnipay-billpay": "dev-master"
+        "quillo/omnipay-billpay": "~0.1"
     }
 }
 ```
