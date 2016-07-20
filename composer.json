@@ -1,5 +1,5 @@
 {
-    "name": "quillo/omnipay-billpay",
+    "name": "connox/omnipay-billpay",
     "type": "library",
     "description": "BillPay gateway for Omnipay payment processing library",
     "keywords": [
@@ -11,12 +11,12 @@
         "billpay",
         "purchase"
     ],
-    "homepage": "https://github.com/Quillo/omnipay-billpay",
+    "homepage": "https://github.com/ConnoxGmbH/omnipay-billpay",
     "license": "MIT",
     "authors": [
         {
             "name": "Andreas Lange",
-            "email": "andreas.lange@quillo.de"
+            "email": "andreas.lange@connox.de"
         }
     ],
     "autoload": {

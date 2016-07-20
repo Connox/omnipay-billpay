@@ -19,8 +19,8 @@ use SimpleXMLElement;
  *
  * @link      https://techdocs.billpay.de/de/An_Entwickler/XML_API/Cancel.html
  *
- * @author    Andreas Lange <andreas.lange@quillo.de>
- * @copyright 2016, Quillo GmbH
+ * @author    Andreas Lange <andreas.lange@connox.de>
+ * @copyright 2016, Connox GmbH
  * @license   MIT
  */
 class RefundRequest extends AbstractRequest

@@ -18,8 +18,8 @@ use SimpleXMLElement;
  *
  * @link      https://techdocs.billpay.de/en/For_developers/XML_API/Preauthorize.html
  *
- * @author    Andreas Lange <andreas.lange@quillo.de>
- * @copyright 2016, Quillo GmbH
+ * @author    Andreas Lange <andreas.lange@connox.de>
+ * @copyright 2016, Connox GmbH
  * @license   MIT
  */
 class AuthorizeRequest extends AbstractRequest

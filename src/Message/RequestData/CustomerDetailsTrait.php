@@ -12,8 +12,8 @@ use SimpleXMLElement;
 /**
  * Class CustomerDetailsTrait
  *
- * @author    Andreas Lange <andreas.lange@quillo.de>
- * @copyright 2016, Quillo GmbH
+ * @author    Andreas Lange <andreas.lange@connox.de>
+ * @copyright 2016, Connox GmbH
  * @license   MIT
  */
 trait CustomerDetailsTrait

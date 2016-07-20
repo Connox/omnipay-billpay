@@ -2,14 +2,14 @@
 
 **BillPay driver for the Omnipay PHP payment processing library**
 
-[![License](https://poser.pugx.org/quillo/omnipay-billpay/license)](https://packagist.org/packages/quillo/omnipay-billpay)
-[![Latest Stable Version](https://poser.pugx.org/quillo/omnipay-billpay/v/stable)](https://packagist.org/packages/quillo/omnipay-billpay)
-[![Latest Unstable Version](https://poser.pugx.org/quillo/omnipay-billpay/v/unstable)](https://packagist.org/packages/quillo/omnipay-billpay)
-[![Total Downloads](https://poser.pugx.org/quillo/omnipay-billpay/downloads)](https://packagist.org/packages/quillo/omnipay-billpay)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Quillo/omnipay-billpay/build-status/master)
-[![Travis](https://img.shields.io/travis/Quillo/omnipay-billpay.svg?style=flat)](https://travis-ci.org/Quillo/omnipay-billpay)
+[![License](https://poser.pugx.org/connox/omnipay-billpay/license)](https://packagist.org/packages/connox/omnipay-billpay)
+[![Latest Stable Version](https://poser.pugx.org/connox/omnipay-billpay/v/stable)](https://packagist.org/packages/connox/omnipay-billpay)
+[![Latest Unstable Version](https://poser.pugx.org/connox/omnipay-billpay/v/unstable)](https://packagist.org/packages/connox/omnipay-billpay)
+[![Total Downloads](https://poser.pugx.org/connox/omnipay-billpay/downloads)](https://packagist.org/packages/connox/omnipay-billpay)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/build-status/master)
+[![Travis](https://img.shields.io/travis/ConnoxGmbH/omnipay-billpay.svg?style=flat)](https://travis-ci.org/ConnoxGmbH/omnipay-billpay)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.6+. This package implements BillPay support for Omnipay.
@@ -30,7 +30,7 @@ to your `composer.json` file:
 ```json
 {
     "require": {
-        "quillo/omnipay-billpay": "~0.1"
+        "connox/omnipay-billpay": "~0.1"
     }
 }
 ```

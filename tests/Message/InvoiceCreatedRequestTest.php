@@ -7,8 +7,8 @@ use Omnipay\Tests\TestCase;
 /**
  * Class InvoiceCreatedRequestTest.
  *
- * @author    Andreas Lange <andreas.lange@quillo.de>
- * @copyright 2016, Quillo GmbH
+ * @author    Andreas Lange <andreas.lange@connox.de>
+ * @copyright 2016, Connox GmbH
  * @license   MIT
  */
 class InvoiceCreatedRequestTest extends TestCase
