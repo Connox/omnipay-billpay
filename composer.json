@@ -11,7 +11,7 @@
         "billpay",
         "purchase"
     ],
-    "homepage": "https://github.com/ConnoxGmbH/omnipay-billpay",
+    "homepage": "https://github.com/Connox/omnipay-billpay",
     "license": "MIT",
     "authors": [
         {

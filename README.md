@@ -6,10 +6,10 @@
 [![Latest Stable Version](https://poser.pugx.org/connox/omnipay-billpay/v/stable)](https://packagist.org/packages/connox/omnipay-billpay)
 [![Latest Unstable Version](https://poser.pugx.org/connox/omnipay-billpay/v/unstable)](https://packagist.org/packages/connox/omnipay-billpay)
 [![Total Downloads](https://poser.pugx.org/connox/omnipay-billpay/downloads)](https://packagist.org/packages/connox/omnipay-billpay)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ConnoxGmbH/omnipay-billpay/build-status/master)
-[![Travis](https://img.shields.io/travis/ConnoxGmbH/omnipay-billpay.svg?style=flat)](https://travis-ci.org/ConnoxGmbH/omnipay-billpay)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Connox/omnipay-billpay/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Connox/omnipay-billpay/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Connox/omnipay-billpay/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Connox/omnipay-billpay/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/Connox/omnipay-billpay/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Connox/omnipay-billpay/build-status/master)
+[![Travis](https://img.shields.io/travis/Connox/omnipay-billpay.svg?style=flat)](https://travis-ci.org/Connox/omnipay-billpay)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.6+. This package implements BillPay support for Omnipay.
