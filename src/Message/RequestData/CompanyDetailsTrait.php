@@ -37,8 +37,10 @@ trait CompanyDetailsTrait
      */
     protected function appendCompanyDetails(SimpleXMLElement $data)
     {
-        $data->addChild('company_details');
-        $this->appendCompanyDetailsAdditional($data, $this->getCompanyDetails());
+        if ($this->getCompanyDetails()) {
+            $data->addChild('company_details');
+            $this->appendCompanyDetailsAdditional($data, $this->getCompanyDetails());
+        }
     }
 
     /**
