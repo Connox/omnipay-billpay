@@ -4,6 +4,7 @@ namespace Omnipay\BillPay\Message;
 
 use Omnipay\BillPay\Message\RequestData\ArticleDataTrait;
 use Omnipay\BillPay\Message\RequestData\BankAccountTrait;
+use Omnipay\BillPay\Message\RequestData\CompanyDetailsTrait;
 use Omnipay\BillPay\Message\RequestData\CustomerDetailsTrait;
 use Omnipay\BillPay\Message\RequestData\DataTrait;
 use Omnipay\BillPay\Message\RequestData\RateTrait;
@@ -14,7 +15,7 @@ use Omnipay\Common\Message\ResponseInterface;
 use SimpleXMLElement;
 
 /**
- * Message AuthorizeRequest
+ * Message AuthorizeRequest.
  *
  * @link      https://techdocs.billpay.de/en/For_developers/XML_API/Preauthorize.html
  *
@@ -26,6 +27,7 @@ class AuthorizeRequest extends AbstractRequest
 {
     use DataTrait;
     use CustomerDetailsTrait;
+    use CompanyDetailsTrait;
     use ShippingDetailsTrait;
     use ArticleDataTrait;
     use TotalTrait;
@@ -54,6 +56,7 @@ class AuthorizeRequest extends AbstractRequest
 
         $this->appendData($data);
         $this->appendCustomerDetails($data);
+        $this->appendCompanyDetails($data);
         $this->appendShippingDetails($data);
         $this->appendArticleData($data);
         $this->appendTotal($data);
@@ -76,7 +79,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function setPaymentMethod($value)
     {
-        if ($value !== null && !array_key_exists($value, self::$paymentTypes)) {
+        if ($value !== null && ! array_key_exists($value, self::$paymentTypes)) {
             throw new InvalidRequestException(sprintf('Unknown payment method specified \'%s\' specified.', $value));
         }
 
