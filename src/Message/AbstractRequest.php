@@ -7,7 +7,7 @@ use Omnipay\Common\Message\ResponseInterface;
 use SimpleXMLElement;
 
 /**
- * BillPay Abstract Request
+ * BillPay Abstract Request.
  *
  * @link      https://techdocs.billpay.de/en/For_developers/Introduction.html
  *
@@ -104,7 +104,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
-     * Send the request with specified data
+     * Send the request with specified data.
      *
      * @param SimpleXMLElement $data The data to send
      *
@@ -114,7 +114,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
      */
     public function sendData($data)
     {
-        if (!$data instanceof SimpleXMLElement) {
+        if (! $data instanceof SimpleXMLElement) {
             throw new InvalidRequestException('Data must be XML.');
         }
 
