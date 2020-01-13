@@ -1,4 +1,5 @@
 {
+    "abandoned": true,
     "name": "connox/omnipay-billpay",
     "type": "library",
     "description": "BillPay gateway for Omnipay payment processing library",
